@@ -1,3 +1,6 @@
+import datetime
+
+
 class User(db.Model):
 
     __tablename__ = 'users'
@@ -12,3 +15,39 @@ class User(db.Model):
 
     def __repr__(self):
         return f"<User's first name is {self.fname}, last name is {self.lname}, and email is {self.email}.>"
+
+
+class Habit(db.Model):
+
+    __tablename__ = 'habits'
+
+    habit_id = db.Column(UUID(as_uuid=True), primary_key=True,
+                         server_default=sqlalchemy.text("uuid_generate_v4()"),)
+
+    name = db.Column(db.String, nullable=False)
+    description = db.Column(db.String)
+    habit_type = db.Column(db.String, nullable=False)
+    user_id = db.Column(db.String, db.ForeignKey('users.user_id'))
+    notes = db.Column(db.TextField)
+
+
+class Log(db.Model):
+
+    __tablename__ = 'logs'
+
+    log_id = db.Column(UUID(as_uuid=True), primary_key=True,
+                       server_default=sqlalchemy.text("uuid_generate_v4()"),)
+
+    user_id = db.Column(db.String, db.ForeignKey('users.user_id'))
+    date = db.Column(db.datetime, nullable=False)
+
+
+class Habit_Log(db.Model):
+
+    __tablename__ = 'habit_logs'
+
+    habit_log_id = db.Column(UUID(as_uuid=True), primary_key=True,
+                             server_default=sqlalchemy.text("uuid_generate_v4()"),)
+
+    habit_id = db.Column(db.String, db.ForeignKey('habits.habit_id'))
+    log_id = db.Column(db.String, db.ForeignKey('logs.log_id'))
