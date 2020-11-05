@@ -16,14 +16,17 @@ const IndexPage = () => {
   return (
     <Layout>
       {`Is logged in:${isLoggedIn}`}
+      <br />
       <form onSubmit={handleSubmit(onSubmit)}>
         <label>Email</label>
         <input type="text" name="email" ref={register} />
-
+        <br />
+        <br />
         <label>password</label>
         <input type="password" name="password" ref={register} />
 
         <button type="submit">Submit</button>
+        <br />
       </form>
     </Layout>
   )
