@@ -2,12 +2,13 @@ from model import db, User, Habit, Habit_Log, Log, connect_to_db
 from datetime import datetime
 
 
-def create_user(email, password):
+def create_user(user_instance):
     """Create and return a new user."""
 
-    user = User(email=email, password=password)
-
-    db.session.add(user)
+    db.session.add(user_instance)
     db.session.commit()
 
-    return user
+    return True
+
+
+# TODO: Add a try/except
