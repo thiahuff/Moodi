@@ -29,6 +29,7 @@ class Habit(db.Model):
     name = db.Column(db.String, nullable=False)
     description = db.Column(db.String)
     habit_type = db.Column(db.String, nullable=False)
+    habit_assertion = db.Column(db.String, nullable=False)
     user_id = db.Column(db.String, db.ForeignKey('users.user_id'))
     notes = db.Column(db.TextField)
 
