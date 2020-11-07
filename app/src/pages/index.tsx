@@ -13,7 +13,7 @@ const IndexPage = () => {
 
   const onSubmit = async formValues => {
     console.log(formValues)
-    const response = await Axios.post("localhost:5000/users", formValues)
+    const response = await Axios.post("http://localhost:5000/users", formValues)
     // const user = await Auth.signUp(formValues)
     // console.log(user)
   }
