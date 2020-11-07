@@ -1,14 +1,17 @@
 from flask import jsonify, Flask, json
 from model import db, User, Habit, Log, connect_to_db
+from crud import create_user
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 
-@app.route('/users')
-def get_user():
-    user_cynthia = User('Cynthia', 'Soffiantini', 'thiahuff')
+@app.route('/users', methods=['POST', 'GET'])
+def get_user(user):
+    create_user(user)
 
-    return json.dumps(user_cynthia.__dict__)
+    return True
 
 
 if __name__ == '__main__':

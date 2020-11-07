@@ -1,25 +1,29 @@
 import React, { useState } from "react"
 import Layout from "../components/layout"
 import { useForm } from "react-hook-form"
+import Auth from "@aws-amplify/auth"
+import config from "../../config"
+import Axios from "axios"
+
+Auth.configure(config)
 
 const IndexPage = () => {
   const { register, handleSubmit, errors } = useForm()
 
-  const [isLoggedIn, setLoggedIn] = useState(false)
 
-  const onSubmit = formValues => {
+  const onSubmit = async formValues => {
     console.log(formValues)
-
-    setLoggedIn(true)
+    const response = await Axios.post("localhost:5000/users", formValues)
+    // const user = await Auth.signUp(formValues)
+    // console.log(user)
   }
 
   return (
     <Layout>
-      {`Is logged in:${isLoggedIn}`}
       <br />
       <form onSubmit={handleSubmit(onSubmit)}>
         <label>Email</label>
-        <input type="text" name="email" ref={register} />
+        <input type="text" name="username" ref={register} />
         <br />
         <br />
         <label>password</label>
