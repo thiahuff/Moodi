@@ -6,6 +6,8 @@ import uuid
 def create_app():
     app = Flask(__name__)
     db.init_app(app)
+    db.create_all()
+    print('create_app yay')
     return app
 
 
@@ -61,11 +63,10 @@ def connect_to_db(flask_app, db_uri='postgresql:///moodi', echo=True):
 
     db.app = flask_app
     db.init_app(flask_app)
-
     print('Connected to the db!')
 
 
 if __name__ == '__main__':
-    from server import app
+    from main import app
 
     connect_to_db(app)

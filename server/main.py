@@ -9,7 +9,11 @@ CORS(app)  # Enable Cross Origin so requests can come from other domains
 
 @app.route('/users', methods=['POST', 'GET'])
 def get_user():
-    create_user(request.get_json())
+    user = User(**request.get_json())
+    print(user)
+
+    result = create_user(user)
+    print(result)
 
     return jsonify(request.get_json())
 
