@@ -10,10 +10,12 @@ Auth.configure(config)
 const IndexPage = () => {
   const { register, handleSubmit, errors } = useForm()
 
-
   const onSubmit = async formValues => {
     console.log(formValues)
-    const response = await Axios.post("http://localhost:5000/users", { user_id: "123", fname: 'Cynthia' })
+    const response = await Axios.post("http://localhost:5000/users", {
+      user_id: "123",
+      fname: "Cynthia",
+    })
     // const user = await Auth.signUp(formValues)
     // console.log(user)
   }
@@ -26,8 +28,6 @@ const IndexPage = () => {
         <label>password</label>
         <input type="password" name="password" ref={register} />
         <button type="submit">Submit</button>
-        <button type="button" onClick={() =>
-         </button>
       </form>
     </Layout>
   )

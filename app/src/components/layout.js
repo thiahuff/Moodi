@@ -15,7 +15,7 @@ import "./layout.css"
 const Layout = ({ children }) => {
   return (
     <>
-      <Header siteTitle={"New Title"} />
+      <Header siteTitle={"moodi"} />
       <div
         style={{
           margin: `0 auto`,
