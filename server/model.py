@@ -1,6 +1,8 @@
 import datetime
 from flask_sqlalchemy import SQLAlchemy
 import uuid
+from sqlalchemy import create_engine
+from sqlalchemy_utils import database_exists, create_database
 
 
 def create_app():
@@ -63,6 +65,14 @@ def connect_to_db(flask_app, db_uri='postgresql:///moodi', echo=True):
 
     db.app = flask_app
     db.init_app(flask_app)
+    engine = create_engine(
+        db_uri, convert_unicode=True)
+
+    if not database_exists(engine.url):
+        create_database(engine.url)
+        db.create_all(app=flask_app)
+
+    print(database_exists(engine.url))
     print('Connected to the db!')
 
 

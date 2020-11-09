@@ -14,15 +14,11 @@ Auth.configure(config)
 const RegisterPage = () => {
   const { register, handleSubmit, errors } = useForm()
 
-  const onSubmit = async ({
-    username,
-    password,
-    fname,
-    lname,
-    profile_pic,
-  }) => {
+  const onSubmit = async formValues => {
+    const { email, password, fname, lname, profile_pic } = formValues
+    console.log(formValues)
     const response = await Axios.post("http://localhost:5000/users", {
-      email: username,
+      email,
       fname,
       lname,
       profile_pic,
@@ -35,24 +31,29 @@ const RegisterPage = () => {
     <Layout>
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl>
-          <InputLabel htmlFor="username">Email</InputLabel>
-          <Input id="username" name="username" ref={register} />
+          <InputLabel htmlFor="email">Email</InputLabel>
+          <Input id="email" name="email" inputRef={register} />
         </FormControl>
         <FormControl>
           <InputLabel htmlFor="password">Create new password</InputLabel>
-          <Input id="password" type="password" name="password" ref={register} />
+          <Input
+            id="password"
+            type="password"
+            name="password"
+            inputRef={register}
+          />
         </FormControl>
         <FormControl>
           <InputLabel htmlFor="fname">First Name</InputLabel>
-          <Input id="fname" name="first name" ref={register} />
+          <Input id="fname" name="fname" inputRef={register} />
         </FormControl>
         <FormControl>
-          <InputLabel htmlFor="lname">First Name</InputLabel>
-          <Input id="lname" name="last name" ref={register} />
+          <InputLabel htmlFor="lname">Last Name</InputLabel>
+          <Input id="lname" name="lname" inputRef={register} />
         </FormControl>
         {/* TODO: Add file upload component once we have we have somewhere to store them (possibly https://github.com/Yuvaleros/material-ui-dropzone) */}
         {/* <label>Profile Picture</label>
-        <input type="file" name="profile picture" ref={register} /> */}
+        <input type="file" name="profile picture" inputRef={register} /> */}
         <Button type="submit" variant="contained">
           Submit
         </Button>
