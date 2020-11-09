@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import Layout from "../components/layout"
-import { useForm } from "react-hook-form"
+import { Controller, useForm } from "react-hook-form"
 import Auth from "@aws-amplify/auth"
 import config from "../../config"
 import Axios from "axios"
@@ -20,17 +20,14 @@ const IndexPage = () => {
 
   return (
     <Layout>
-      <br />
       <form onSubmit={handleSubmit(onSubmit)}>
         <label>Email</label>
         <input type="text" name="username" ref={register} />
-        <br />
-        <br />
         <label>password</label>
         <input type="password" name="password" ref={register} />
-
         <button type="submit">Submit</button>
-        <br />
+        <button type="button" onClick={() =>
+         </button>
       </form>
     </Layout>
   )
