@@ -17,14 +17,15 @@ const RegisterPage = () => {
   const onSubmit = async formValues => {
     const { email, password, fname, lname, profile_pic } = formValues
     console.log(formValues)
+    const user = await Auth.signUp({ username: email, password })
+    console.log(user.userSub)
     const response = await Axios.post("http://localhost:5000/users", {
+      user_id: user.userSub,
       email,
       fname,
       lname,
       profile_pic,
     })
-    // const user = await Auth.signUp(formValues)
-    // console.log(user)
   }
 
   return (
