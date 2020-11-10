@@ -1,6 +1,6 @@
 from flask import jsonify, Flask, json, request
 from model import db, User, Habit, Log, connect_to_db
-from crud import create_user
+from crud import create_user, get_habits_by_user
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -16,6 +16,13 @@ def get_user():
     print(result)
 
     return jsonify(request.get_json())
+
+
+@app.route('/habits/<user_id>')
+def get_habits_by_user_id(user_id):
+    habits = get_habits_by_user(user_id)
+    print(habits)
+    return jsonify(habits)
 
 
 if __name__ == '__main__':
