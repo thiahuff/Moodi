@@ -1,5 +1,32 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
 
+/* background: rgb(84, 71, 140);
+background: linear-gradient(
+  90deg,
+  rgba(84, 71, 140, 1) 5%,
+  rgba(44, 105, 154, 1) 15%,
+  rgba(18, 127, 162, 1) 25%,
+  rgba(13, 179, 158, 1) 35%,
+  rgba(22, 219, 147, 1) 45%,
+  rgba(131, 227, 119, 1) 55%,
+  rgba(185, 231, 105, 1) 65%,
+  rgba(239, 234, 90, 1) 75%,
+  rgba(241, 196, 83, 1) 85%,
+  rgba(242, 158, 76, 1) 95% */
+/* ); */
+
+/* CSS HEX
+--dark-slate-blue: #54478cff;
+--sapphire-blue: #2c699aff;
+--blue-munsell: #048ba8ff;
+--keppel: #0db39eff;
+--medium-aquamarine: #16db93ff;
+--light-green: #83e377ff;
+--inchworm: #b9e769ff;
+--corn: #efea5aff;
+--maize-crayola: #f1c453ff;
+--sandy-brown: #f29e4cff; */
+
 html {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
