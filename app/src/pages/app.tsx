@@ -3,7 +3,6 @@ import {
   Button,
   FormControlLabel,
   InputLabel,
-  Link,
   Radio,
   RadioGroup,
   Slider,
@@ -12,6 +11,7 @@ import {
 } from "@material-ui/core"
 import React, { useEffect } from "react"
 import Layout from "../components/layout"
+import { Link, navigate } from "gatsby"
 
 const App = () => {
   const getUser = async () => {
