@@ -34,10 +34,9 @@ class Habit(db.Model):
     habit_id = db.Column(db.String, primary_key=True)
     name = db.Column(db.String, nullable=False)
     description = db.Column(db.String)
-    habit_scale_or_bool = db.Column(db.String, nullable=False)
-    habit_neg_pos_neu = db.Column(db.String, nullable=False)
+    display_type = db.Column(db.String, nullable=False)
+    habit_type = db.Column(db.String, nullable=False)
     user_id = db.Column(db.String, db.ForeignKey('users.user_id'))
-    notes = db.Column(db.String)
 
 
 class Log(db.Model):
@@ -56,6 +55,8 @@ class Habit_Log(db.Model):
     habit_log_id = db.Column(db.String, primary_key=True)
     habit_id = db.Column(db.String, db.ForeignKey('habits.habit_id'))
     log_id = db.Column(db.String, db.ForeignKey('logs.log_id'))
+    habit_value = db.Column(db.String)
+    notes = db.Column(db.String)
 
 
 def connect_to_db(flask_app, db_uri='postgresql:///moodi', echo=True):
