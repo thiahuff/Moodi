@@ -4,6 +4,8 @@ import { Controller, useForm } from "react-hook-form"
 import Auth from "@aws-amplify/auth"
 import config from "../../config"
 import Axios from "axios"
+import { Link, navigate } from "gatsby"
+import { Button, FormControl, Input, InputLabel } from "@material-ui/core"
 
 Auth.configure(config)
 
@@ -12,23 +14,35 @@ const IndexPage = () => {
 
   const onSubmit = async formValues => {
     console.log(formValues)
-    const response = await Axios.post("http://localhost:5000/users", {
-      user_id: "123",
-      fname: "Cynthia",
-    })
-    // const user = await Auth.signUp(formValues)
-    // console.log(user)
+    const user = await Auth.signIn(formValues)
+    console.log(user)
+
+    navigate("/app")
   }
 
   return (
     <Layout>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label>Email</label>
-        <input type="text" name="username" ref={register} />
-        <label>password</label>
-        <input type="password" name="password" ref={register} />
-        <button type="submit">Submit</button>
+        <FormControl>
+          <InputLabel htmlFor="email">Email</InputLabel>
+          <Input id="email" name="username" inputRef={register} />
+        </FormControl>
+        <FormControl>
+          <InputLabel htmlFor="password">Password</InputLabel>
+          <Input
+            id="password"
+            type="password"
+            name="password"
+            inputRef={register}
+          />
+        </FormControl>
+        <Button type="submit" variant="contained">
+          Submit
+        </Button>
       </form>
+      <Link to="/register">
+        <Button variant="contained">Register</Button>
+      </Link>
     </Layout>
   )
 }

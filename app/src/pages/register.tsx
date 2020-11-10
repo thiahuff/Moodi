@@ -8,6 +8,7 @@ import FormControl from "@material-ui/core/FormControl"
 import Input from "@material-ui/core/Input"
 import InputLabel from "@material-ui/core/InputLabel"
 import { Button } from "@material-ui/core"
+import { navigate } from "gatsby"
 
 Auth.configure(config)
 
@@ -26,6 +27,7 @@ const RegisterPage = () => {
       lname,
       profile_pic,
     })
+    navigate("/")
   }
 
   return (
