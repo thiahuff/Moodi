@@ -49,6 +49,15 @@ const App = () => {
     <Layout>
       <form>
         <h1>Today's Log</h1>
+        <InputLabel>Today's Mood</InputLabel>
+        <Slider
+          defaultValue={5}
+          step={0.01}
+          max={10}
+          min={1}
+          valueLabelDisplay="on"
+          style={{ color: "blue" }}
+        />
         {habits.map(habit => {
           return (
             <>
