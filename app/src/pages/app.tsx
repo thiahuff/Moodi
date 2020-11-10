@@ -1,7 +1,9 @@
 import Auth from "@aws-amplify/auth"
 import {
+  Button,
   FormControlLabel,
   InputLabel,
+  Link,
   Radio,
   RadioGroup,
   Slider,
@@ -92,6 +94,9 @@ const App = () => {
           )
         })}
       </form>
+      <Link to="/">
+        <Button variant="contained">Log Out</Button>
+      </Link>
     </Layout>
   )
 }
