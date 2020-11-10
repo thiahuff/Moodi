@@ -3,6 +3,9 @@ from flask_sqlalchemy import SQLAlchemy
 import uuid
 from sqlalchemy import create_engine
 from sqlalchemy_utils import database_exists, create_database
+from sqlalchemy.dialects.postgresql import UUID
+from flask_sqlalchemy import SQLAlchemy
+import uuid
 
 
 def create_app():
@@ -20,7 +23,8 @@ class User(db.Model):
 
     __tablename__ = 'users'
 
-    user_id = db.Column(db.String, primary_key=True)
+    user_id = db.Column(
+        UUID(as_uuid=True), primary_key=True, unique=True, nullable=False)
     fname = db.Column(db.String, nullable=False)
     lname = db.Column(db.String, nullable=False)
     email = db.Column(db.String, nullable=False)
@@ -31,20 +35,22 @@ class Habit(db.Model):
 
     __tablename__ = 'habits'
 
-    habit_id = db.Column(db.String, primary_key=True)
+    habit_id = db.Column(UUID(as_uuid=True), primary_key=True,
+                         default=uuid.uuid4, unique=True, nullable=False)
     name = db.Column(db.String, nullable=False)
     description = db.Column(db.String)
     display_type = db.Column(db.String, nullable=False)
     habit_type = db.Column(db.String, nullable=False)
-    user_id = db.Column(db.String, db.ForeignKey('users.user_id'))
+    user_id = db.Column(db.ForeignKey('users.user_id'))
 
 
 class Log(db.Model):
 
     __tablename__ = 'logs'
 
-    log_id = db.Column(db.String, primary_key=True)
-    user_id = db.Column(db.String, db.ForeignKey('users.user_id'))
+    log_id = db.Column(UUID(as_uuid=True), primary_key=True,
+                       default=uuid.uuid4, unique=True, nullable=False)
+    user_id = db.Column(db.ForeignKey('users.user_id'))
     date = db.Column(db.DateTime, nullable=False)
 
 
@@ -52,9 +58,10 @@ class Habit_Log(db.Model):
 
     __tablename__ = 'habit_logs'
 
-    habit_log_id = db.Column(db.String, primary_key=True)
-    habit_id = db.Column(db.String, db.ForeignKey('habits.habit_id'))
-    log_id = db.Column(db.String, db.ForeignKey('logs.log_id'))
+    habit_log_id = db.Column(UUID(as_uuid=True), primary_key=True,
+                             default=uuid.uuid4, unique=True, nullable=False)
+    habit_id = db.Column(db.ForeignKey('habits.habit_id'))
+    log_id = db.Column(db.ForeignKey('logs.log_id'))
     habit_value = db.Column(db.String)
     notes = db.Column(db.String)
 
@@ -66,6 +73,8 @@ def connect_to_db(flask_app, db_uri='postgresql:///moodi', echo=True):
 
     db.app = flask_app
     db.init_app(flask_app)
+    # db.drop_all(app=flask_app)
+    # uncomment line above and move create_all() out of the "if not" to drop db and start over
     engine = create_engine(
         db_uri, convert_unicode=True)
 
