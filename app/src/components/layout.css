@@ -27,6 +27,25 @@ background: linear-gradient(
 --maize-crayola: #f1c453ff;
 --sandy-brown: #f29e4cff; */
 
+#logo {
+  font-size: 72px;
+  background: linear-gradient(
+    90deg,
+    rgba(84, 71, 140, 1) 5%,
+    rgba(44, 105, 154, 1) 15%,
+    rgba(18, 127, 162, 1) 25%,
+    rgba(13, 179, 158, 1) 35%,
+    rgba(22, 219, 147, 1) 45%,
+    rgba(131, 227, 119, 1) 55%,
+    rgba(185, 231, 105, 1) 65%,
+    rgba(239, 234, 90, 1) 75%,
+    rgba(241, 196, 83, 1) 85%,
+    rgba(242, 158, 76, 1) 95%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 html {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
