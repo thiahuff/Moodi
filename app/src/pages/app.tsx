@@ -93,6 +93,9 @@ const App = () => {
             </>
           )
         })}
+        <Button type="submit" variant="contained">
+          Submit
+        </Button>
       </form>
       <Link to="/">
         <Button variant="contained">Log Out</Button>
