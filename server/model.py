@@ -43,6 +43,19 @@ class Habit(db.Model):
     habit_type = db.Column(db.String, nullable=False)
     user_id = db.Column(db.ForeignKey('users.user_id'))
 
+    @property
+    def serialize(self):
+        """Return object data in easily serializable format"""
+        print(self.name)
+        return {
+            'habit_id': self.habit_id,
+            'name': self.name,
+            'description': self.description,
+            'display_type': self.display_type,
+            'habit_type': self.habit_type,
+            'user_id': self.user_id
+        }
+
 
 class Log(db.Model):
 
