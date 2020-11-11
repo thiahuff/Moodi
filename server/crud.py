@@ -17,7 +17,7 @@ def create_log(log_instance):
     db.session.add(log_instance)
     db.session.commit()
 
-    return True
+    return log_instance.log_id
 
 
 def create_habit(habit_instance):

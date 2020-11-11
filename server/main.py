@@ -1,6 +1,6 @@
 from flask import jsonify, Flask, json, request
 from model import db, User, Habit, Log, connect_to_db
-from crud import create_user, get_habits_by_user, create_habit
+from crud import create_user, get_habits_by_user, create_habit, create_log
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -29,6 +29,20 @@ def get_habits_by_user_id(user_id):
 def create_new_habit():
     habit = Habit(**request.get_json())
     result = create_habit(habit)
+    return jsonify({"success": True})
+
+
+@app.route('/logs', methods=['POST', 'GET'])
+def create_new_log():
+    log = Log(**request.get_json())
+    result = create_log(log)
+    return jsonify({"log_id": result})
+
+
+@app.route('/habit-logs', methods=['POST', 'GET'])
+def add_to_habit_log():
+    habit_log = HabitLog(**request.get_json())
+    result = create_habit_log(HabitLog)
     return jsonify({"success": True})
 
 

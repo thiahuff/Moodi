@@ -12,12 +12,32 @@ import {
 import React, { useEffect } from "react"
 import Layout from "../components/layout"
 import { Link, navigate } from "gatsby"
+import dayjs from "dayjs"
+import Axios from "axios"
+import { useForm, useFieldArray } from "react-hook-form"
 
 const App = () => {
   const getUser = async () => {
     const user = await Auth.currentAuthenticatedUser()
     console.log(user)
   }
+
+  const onSubmit = async formValues => {
+    console.log(formValues)
+    const user = await Auth.currentAuthenticatedUser()
+    const response = await Axios.post("http://localhost:5000/logs", {
+      user_id: user.username,
+      date: dayjs().format("MM-DD-YYYY"),
+    })
+    // TODO: Still need to send habits to the habit_log table with the log_id attached
+    const { log_id } = response.data
+    const habitLogResponse = await Axios.post(
+      "http://localhost:5000/habit-logs",
+      {}
+    )
+  }
+
+  const { handleSubmit } = useForm()
 
   useEffect(() => {
     getUser()
@@ -49,7 +69,7 @@ const App = () => {
 
   return (
     <Layout>
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <h1>Today's Log</h1>
         <InputLabel>Today's Mood</InputLabel>
         <Slider
@@ -105,10 +125,3 @@ const App = () => {
 }
 
 export default App
-
-// habit_id = db.Column(db.String, primary_key=True)
-//     name = db.Column(db.String, nullable=False)
-//     description = db.Column(db.String)
-//     display_type = db.Column(db.String, nullable=False)
-// habit_type = db.Column(db.String, nullable=False)
-//     notes = db.Column(db.String)
