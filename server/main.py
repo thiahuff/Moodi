@@ -1,6 +1,6 @@
 from flask import jsonify, Flask, json, request
 from model import db, User, Habit, Log, connect_to_db
-from crud import create_user, get_habits_by_user
+from crud import create_user, get_habits_by_user, create_habit
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -8,7 +8,7 @@ CORS(app)  # Enable Cross Origin so requests can come from other domains
 
 
 @app.route('/users', methods=['POST', 'GET'])
-def get_user():
+def create_new_user():
     user = User(**request.get_json())
     print(user)
 
@@ -22,7 +22,14 @@ def get_user():
 def get_habits_by_user_id(user_id):
     habits = get_habits_by_user(user_id)
     print(habits)
-    return jsonify(habits)
+    return jsonify([habit.serialize for habit in habits])
+
+
+@app.route('/habits', methods=['POST', 'GET'])
+def create_new_habit():
+    habit = Habit(**request.get_json())
+    result = create_habit(habit)
+    return jsonify({"success": True})
 
 
 if __name__ == '__main__':

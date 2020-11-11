@@ -41,7 +41,9 @@ def create_habit_log(habit_log_instance):
 def get_habits_by_user(user_id):
 
     habits = db.session.query(Habit).filter(Habit.user_id == user_id).all()
-    print(habits)
+    # print(habits)
+    # for habit in habits:
+    #     print(dict(habit))
     return habits
 
 # TODO: Add a try/except
