@@ -91,7 +91,7 @@ const EditHabit = () => {
                 </InputLabel>
                 <Controller
                   as={
-                    <Select labelId="habit-display-type">
+                    <Select disabled labelId="habit-display-type">
                       <MenuItem value="y/n">Yes or No</MenuItem>
                       <MenuItem value="slider">1-10 sliding scale</MenuItem>
                     </Select>
