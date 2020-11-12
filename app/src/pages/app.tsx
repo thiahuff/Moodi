@@ -9,13 +9,37 @@ import {
   TextField,
   Tooltip,
 } from "@material-ui/core"
-import React, { useEffect } from "react"
+import React, { Fragment, useEffect } from "react"
 import Layout from "../components/layout"
 import { Link, navigate } from "gatsby"
 import dayjs from "dayjs"
 import Axios from "axios"
 import { useForm, useFieldArray } from "react-hook-form"
+import EditHabit from "./edit-habits"
 
+const habits = [
+  {
+    habit_id: 123,
+    name: "Daily Run",
+    display_type: "y/n",
+    habit_type: "positive",
+    notes: "getting faster!",
+  },
+  {
+    habit_id: 124,
+    name: "Daily Meditation",
+    display_type: "y/n",
+    habit_type: "positive",
+    notes: "getting so zen",
+  },
+  {
+    habit_id: 125,
+    name: "Controlled my rage",
+    description: "Maintain my composure and control my anger.",
+    display_type: "scale",
+    habit_type: "positive",
+  },
+]
 const App = () => {
   const getUser = async () => {
     const user = await Auth.currentAuthenticatedUser()
@@ -24,48 +48,31 @@ const App = () => {
 
   const onSubmit = async formValues => {
     console.log(formValues)
-    const user = await Auth.currentAuthenticatedUser()
-    const response = await Axios.post("http://localhost:5000/logs", {
-      user_id: user.username,
-      date: dayjs().format("MM-DD-YYYY"),
-    })
-    // TODO: Still need to send habits to the habit_log table with the log_id attached
-    const { log_id } = response.data
-    const habitLogResponse = await Axios.post(
-      "http://localhost:5000/habit-logs",
-      {}
-    )
+    // const user = await Auth.currentAuthenticatedUser()
+    // const response = await Axios.post("http://localhost:5000/logs", {
+    //   user_id: user.username,
+    //   date: dayjs().format("MM-DD-YYYY"),
+    // })
+    // // TODO: Still need to send habits to the habit_log table with the log_id attached
+
+    // const { log_id } = response.data
+    // const habitLogResponse = await Axios.post(
+    //   "http://localhost:5000/habit-logs",
+    //   {}
+    // )
   }
 
-  const { handleSubmit } = useForm()
+  const { handleSubmit, control, register } = useForm({
+    defaultValues: { habits },
+  })
+  const { fields } = useFieldArray({
+    control,
+    name: "habits",
+  })
 
   useEffect(() => {
     getUser()
   }, [])
-
-  const habits = [
-    {
-      habit_id: 123,
-      name: "Daily Run",
-      display_type: "y/n",
-      habit_type: "positive",
-      notes: "getting faster!",
-    },
-    {
-      habit_id: 124,
-      name: "Daily Meditation",
-      display_type: "y/n",
-      habit_type: "positive",
-      notes: "getting so zen",
-    },
-    {
-      habit_id: 125,
-      name: "Controlled my rage",
-      description: "Maintain my composure and control my anger.",
-      display_type: "scale",
-      habit_type: "positive",
-    },
-  ]
 
   return (
     <Layout>
@@ -80,9 +87,9 @@ const App = () => {
           valueLabelDisplay="on"
           style={{ color: "blue" }}
         />
-        {habits.map(habit => {
+        {fields.map((habit, index) => {
           return (
-            <>
+            <Fragment key={habit.habit_id}>
               {habit.description ? (
                 <Tooltip title={habit.description} placement="right">
                   <InputLabel>{habit.name}</InputLabel>
@@ -109,8 +116,15 @@ const App = () => {
                   style={{ color: "blue" }}
                 />
               )}
-              <TextField label="Notes" multiline rows={4} variant="outlined" />
-            </>
+              <TextField
+                label="Notes"
+                multiline
+                rows={4}
+                variant="outlined"
+                inputRef={register}
+                name={`habits[${index}].notes`}
+              />
+            </Fragment>
           )
         })}
         <Button type="submit" variant="contained">
