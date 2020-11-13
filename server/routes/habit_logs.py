@@ -1,3 +1,5 @@
+from app import app
+
 
 @app.route('/habit-logs', methods=['POST', 'GET'])
 def add_to_habit_log():

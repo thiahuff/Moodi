@@ -30,6 +30,17 @@ class User(db.Model):
     email = db.Column(db.String, nullable=False)
     profile_pic = db.Column(db.String)
 
+    @property
+    def serialize(self):
+        """Return object data in easily serializable format"""
+        return {
+            'user_id': self.user_id,
+            'fname': self.fname,
+            'lname': self.lname,
+            'email': self.email,
+            'profile_pic': self.profile_pic
+        }
+
 
 class Habit(db.Model):
 
@@ -46,7 +57,6 @@ class Habit(db.Model):
     @property
     def serialize(self):
         """Return object data in easily serializable format"""
-        print(self.name)
         return {
             'habit_id': self.habit_id,
             'name': self.name,
@@ -100,6 +110,6 @@ def connect_to_db(flask_app, db_uri='postgresql:///moodi', echo=True):
 
 
 if __name__ == '__main__':
-    from main import app
+    from app import app
 
     connect_to_db(app)
