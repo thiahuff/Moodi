@@ -1,11 +1,6 @@
-from flask import jsonify, Flask, json, request
-from model import db, User, Habit, Log, connect_to_db
-from crud import create_user, get_habits_by_user, create_habit, create_log
-from flask_cors import CORS
-
-app = Flask(__name__)
-CORS(app)  # Enable Cross Origin so requests can come from other domains
-
+from app import app
+from model import connect_to_db
+from routes import habit_logs, habits, logs, users
 
 if __name__ == '__main__':
     connect_to_db(app)
