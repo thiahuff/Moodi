@@ -76,6 +76,15 @@ class Log(db.Model):
     user_id = db.Column(db.ForeignKey('users.user_id'))
     date = db.Column(db.DateTime, nullable=False)
 
+    @property
+    def serialize(self):
+        """Return object data in easily serializable format"""
+        return {
+            'log_id': self.log_id,
+            'user_id': self.user_id,
+            'date': self.date,
+        }
+
 
 class Habit_Log(db.Model):
 
@@ -87,6 +96,17 @@ class Habit_Log(db.Model):
     log_id = db.Column(db.ForeignKey('logs.log_id'))
     habit_value = db.Column(db.String)
     notes = db.Column(db.String)
+
+    @property
+    def serialize(self):
+        """Return object data in easily serializable format"""
+        return {
+            'habit_log_id': self.habit_log_id,
+            'habit_id': self.habit_id,
+            'log_id': self.log_id,
+            'habit_value': self.habit_value,
+            'notes': self.notes,
+        }
 
 
 def connect_to_db(flask_app, db_uri='postgresql:///moodi', echo=True):
