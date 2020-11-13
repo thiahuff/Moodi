@@ -34,12 +34,10 @@ def get_all_users():
 def update_users():
     request_body = request.get_json()
     if isinstance(request_body, list):
-        for user_json_obj in request_body:
-            user = User(**user_json_obj)
-            if user.user_id is not None:
+        for user in request_body:
+            if user["user_id"] is not None:
                 update_user(user)
     else:
-        user = User(**request_body)
         result = update_user(request_body)
     return jsonify(request.get_json())
 

@@ -27,7 +27,5 @@ def get_users_from_db():
 
 
 def update_user(user):
-    print(user)
-    print(user['user_id'])
     db.session.query(User).filter(User.user_id == user['user_id']).update(user)
     db.session.commit()

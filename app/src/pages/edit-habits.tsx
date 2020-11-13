@@ -31,7 +31,7 @@ const EditHabit = () => {
     const user = await Auth.currentAuthenticatedUser()
     console.log(user)
     const response = await Axios.get(
-      `http://localhost:5000/habits/${user.username}`
+      `http://localhost:5000/habits/user/${user.username}`
     )
     setHabits(response.data)
     setIsLoading(false)
