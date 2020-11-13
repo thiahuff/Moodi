@@ -47,7 +47,7 @@ def habits_by_user_id(user_id):
     return jsonify([habit.serialize for habit in habits])
 
 
-@app.route('habits/<habit_id>', methods=['GET', 'DELETE'])
+@app.route('/habits/<habit_id>', methods=['GET', 'DELETE'])
 def habit_by_id(habit_id):
     if request.method == 'GET':
         habit = get_habit_by_id(habit_id)
