@@ -1,6 +1,6 @@
 from app import app
 from model import connect_to_db
-from routes import habit_logs, habits, logs, users
+from routes import habit_logs_routes, users_routes, habits_routes, logs_routes
 
 if __name__ == '__main__':
     connect_to_db(app)
