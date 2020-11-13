@@ -20,13 +20,6 @@ def update_habit(habit):
     db.session.commit()
 
 
-def get_habits_by_user(user_id):
-    """query for habits by user_id."""
-    habits = db.session.query(Habit).filter(Habit.user_id == user_id).all()
-
-    return habits
-
-
 def get_habit_by_id(habit_id):
     habit = db.session.query(Habit).filter(Habit.habit_id == habit_id).first()
     return habit
@@ -36,3 +29,18 @@ def delete_habit_by_id(habit_id):
     db.session.query(Habit).filter_by(habit_id=habit_id).delete()
     db.session.commit()
     return True
+
+
+def get_habits_by_user(user_id):
+    """query for habits by user_id."""
+    habits = db.session.query(Habit).filter(Habit.user_id == user_id).all()
+
+    return habits
+
+
+def get_habits_by_habit_log(habit_log_id):
+    """query for habits by habit_log_id."""
+    habits = db.session.query(Habit).filter(
+        Habit.habit_log_id == habit_log_id).all()
+
+    return habits

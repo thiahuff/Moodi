@@ -1,6 +1,6 @@
 from app import app
 from flask import jsonify, request
-from crud.habits import create_habit, get_habits_by_user, get_habits_from_db, update_habit, get_habit_by_id, delete_habit_by_id
+from crud.habits import create_habit, get_habits_by_user, get_habits_from_db, update_habit, get_habit_by_id, delete_habit_by_id, get_habits_by_habit_log
 
 
 @app.route('/habits', methods=['POST', 'GET', 'PUT'])
@@ -41,12 +41,6 @@ def update_habits():
     return jsonify(request.get_json())
 
 
-@app.route('/habits/user/<user_id>')
-def habits_by_user_id(user_id):
-    habits = get_habits_by_user(user_id)
-    return jsonify([habit.serialize for habit in habits])
-
-
 @app.route('/habits/<habit_id>', methods=['GET', 'DELETE'])
 def habit_by_id(habit_id):
     if request.method == 'GET':
@@ -57,3 +51,15 @@ def habit_by_id(habit_id):
     else:
         delete_habit_by_id(habit_id)
         return jsonify({"success": True})
+
+
+@app.route('/habits/user/<user_id>')
+def habits_by_user_id(user_id):
+    habits = get_habits_by_user(user_id)
+    return jsonify([habit.serialize for habit in habits])
+
+
+@app.route('/habits/habit_log/<habit_log_id>')
+def habits_by_habit_log_id(habit_log_id):
+    habits = get_habits_by_habit_log(habit_log_id)
+    return jsonify([habit.serialize for habit in habits])
