@@ -27,6 +27,8 @@ import { Controller, useForm } from "react-hook-form"
 const EditHabit = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [habits, setHabits] = useState([])
+  const { register, handleSubmit, errors, control } = useForm()
+
   const getUserHabits = async () => {
     const user = await Auth.currentAuthenticatedUser()
     console.log(user)
@@ -36,7 +38,10 @@ const EditHabit = () => {
     setHabits(response.data)
     setIsLoading(false)
   }
-  const { register, handleSubmit, errors, control } = useForm()
+
+  useEffect(() => {
+    getUserHabits()
+  }, [])
 
   const onSubmit = async formValues => {
     console.log(formValues)
@@ -47,10 +52,6 @@ const EditHabit = () => {
       user_id: user.username,
     })
   }
-
-  useEffect(() => {
-    getUserHabits()
-  }, [])
 
   const [open, setOpen] = useState(false)
 
@@ -71,7 +72,6 @@ const EditHabit = () => {
       <form>
         <h1>Your Habits</h1>
 
-        {/* TODO: Add mapping for user's habits */}
         {habits.map(habit => {
           return (
             <Fragment key={habit.habit_id}>
