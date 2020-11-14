@@ -1,6 +1,7 @@
 from app import app
 from flask import jsonify, request
 from crud.habits import create_habit, get_habits_by_user, get_habits_from_db, update_habit, get_habit_by_id, delete_habit_by_id, get_habits_by_habit_log
+from model import Habit
 
 
 @app.route('/habits', methods=['POST', 'GET', 'PUT'])
@@ -15,7 +16,7 @@ def access_habit():
 
 def create_new_habit():
     request_body = request.get_json()
-    if isinstance(request_body, list):
+    if request_body.get("habits") is not None:
         for habit_json_obj in request_body:
             habit = Habit(**habit_json_obj)
             create_habit(habit)

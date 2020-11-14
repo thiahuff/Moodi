@@ -1,5 +1,7 @@
 from app import app
 from crud.habit_logs import create_habit_log, get_habit_logs_from_db, update_habit_log, get_habit_logs_by_user, get_habit_log_by_id, delete_habit_log_by_id
+from model import Habit_Log
+from flask import jsonify, request
 
 
 @app.route('/habit-logs', methods=['POST', 'GET', 'PUT'])
@@ -14,14 +16,17 @@ def access_habit_log():
 
 def create_new_habit_log():
     request_body = request.get_json()
-    if isinstance(request_body, list):
-        for habit_log_json_obj in request_body:
+    if request_body["habit_logs"] is not None:
+        habit_logs = []
+        for habit_log_json_obj in request_body["habit_logs"]:
             habit_log = Habit_Log(**habit_log_json_obj)
-            create_habit_log(habit_log)
+            result = create_habit_log(habit_log)
+            habit_logs.append(result)
+        return jsonify([habit_log.serialize for habit_log in habit_logs])
     else:
-        habit_log = habit_Log(**request_body)
+        habit_log = Habit_Log(**request_body)
         result = create_habit_log(habit_log)
-    return jsonify(request.get_json())
+        return jsonify(result.serialize)
 
 
 def get_all_habit_logs():
@@ -41,13 +46,13 @@ def update_habit_logs():
     return jsonify(request.get_json())
 
 
-@app.route('/logs/user/<user_id>')
+@ app.route('/logs/user/<user_id>')
 def habit_logs_by_user_id(user_id):
     habit_logs = get_habit_logs_by_user(user_id)
     return jsonify([habit_log.serialize for habit_log in habit_logs])
 
 
-@app.route('/habit_logs/<habit_log_id>', methods=['GET', 'DELETE'])
+@ app.route('/habit_logs/<habit_log_id>', methods=['GET', 'DELETE'])
 def habit_log_by_id(habit_log_id):
     if request.method == 'GET':
         habit_log = get_habit_log_by_id(habit_log_id)

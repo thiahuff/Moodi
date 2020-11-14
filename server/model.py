@@ -75,6 +75,7 @@ class Log(db.Model):
                        default=uuid.uuid4, unique=True, nullable=False)
     user_id = db.Column(db.ForeignKey('users.user_id'))
     date = db.Column(db.DateTime, nullable=False)
+    mood_value = db.Column(db.Float)
 
     @property
     def serialize(self):
@@ -94,6 +95,7 @@ class Habit_Log(db.Model):
                              default=uuid.uuid4, unique=True, nullable=False)
     habit_id = db.Column(db.ForeignKey('habits.habit_id'))
     log_id = db.Column(db.ForeignKey('logs.log_id'))
+    user_id = db.Column(db.ForeignKey('users.user_id'))
     habit_value = db.Column(db.String)
     notes = db.Column(db.String)
 
@@ -104,6 +106,7 @@ class Habit_Log(db.Model):
             'habit_log_id': self.habit_log_id,
             'habit_id': self.habit_id,
             'log_id': self.log_id,
+            'user_id': self.user_id,
             'habit_value': self.habit_value,
             'notes': self.notes,
         }

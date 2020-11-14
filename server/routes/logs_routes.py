@@ -1,5 +1,7 @@
 from app import app
 from crud.logs import create_log, get_logs_from_db, update_log, get_logs_by_user, get_log_by_id, delete_log_by_id
+from model import Log
+from flask import jsonify, request
 
 
 @app.route('/logs', methods=['POST', 'GET', 'PUT'])
@@ -14,14 +16,17 @@ def access_logs():
 
 def create_new_log():
     request_body = request.get_json()
-    if isinstance(request_body, list):
-        for log_json_obj in request_body:
+    if request_body.get("logs") is not None:
+        logs = []
+        for log_json_obj in request_body["logs"]:
             log = Log(**log_json_obj)
-            create_log(log)
+            result = create_log(log)
+            logs.append(result)
+        return jsonify([log.serialize for log in logs])
     else:
         log = Log(**request_body)
         result = create_log(log)
-    return jsonify(request.get_json())
+        return jsonify(result.serialize)
 
 
 def get_all_logs():

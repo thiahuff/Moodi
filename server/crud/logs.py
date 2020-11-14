@@ -7,7 +7,7 @@ def create_log(log_instance):
     db.session.add(log_instance)
     db.session.commit()
 
-    return log_instance.log_id
+    return log_instance
 
 
 def get_logs_from_db():
