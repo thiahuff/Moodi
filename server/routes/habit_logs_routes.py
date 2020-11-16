@@ -46,13 +46,13 @@ def update_habit_logs():
     return jsonify(request.get_json())
 
 
-@ app.route('/logs/user/<user_id>')
+@ app.route('/habit-logs/user/<user_id>')
 def habit_logs_by_user_id(user_id):
     habit_logs = get_habit_logs_by_user(user_id)
     return jsonify([habit_log.serialize for habit_log in habit_logs])
 
 
-@ app.route('/habit_logs/<habit_log_id>', methods=['GET', 'DELETE'])
+@ app.route('/habit-logs/<habit_log_id>', methods=['GET', 'DELETE'])
 def habit_log_by_id(habit_log_id):
     if request.method == 'GET':
         habit_log = get_habit_log_by_id(habit_log_id)
