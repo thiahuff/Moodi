@@ -67,6 +67,21 @@ const EditHabit = () => {
     return "Loading..."
   }
 
+  // TODO: get the formvalues to put new habits to db
+  // const updateHabit = async formValues () => {
+  //   const user = await Auth.currentAuthenticatedUser()
+  //   Axios.put("http://localhost:5000/habits", {
+  //     ...formValues,
+  //     user_id: user.username,
+  //   })
+  // }
+
+  const deleteHabit = async () => {
+    alert(
+      "Are you sure you want to delete this habit? You will not be able to undo this action."
+    )
+  }
+
   return (
     <Layout>
       <form>
@@ -125,12 +140,19 @@ const EditHabit = () => {
                 />
               </FormControl>
 
-              <Button variant="contained" endIcon={<DeleteForeverIcon />}>
+              <Button
+                onClick={deleteHabit}
+                variant="contained"
+                endIcon={<DeleteForeverIcon />}
+              >
                 Delete Habit
               </Button>
             </Fragment>
           )
         })}
+        <Button onClick={updateHabit} variant="contained">
+          Submit Changes
+        </Button>
       </form>
       <Button
         variant="contained"
