@@ -35,20 +35,37 @@ const GraphView = () => {
     )
 
     const datasets = habits.map((habit, index) => {
+      const habitLogsForHabit = habitLogs.filter(
+        hl => hl.habit_id === habit.habit_id
+      )
       return {
         label: habit.name,
-        fill: false,
+        fill: habit.display_type === "slider" ? true : false,
         backgroundColor: colors[(index + 1) % colors.length],
         borderColor: colors[(index + 1) % colors.length],
-        data: habitLogs
-          .filter(habitLog => habit.habit_id === habitLog.habit_id)
-          .map(habitLog =>
-            habitLog.habit_type === "slider"
-              ? parseFloat(habitLog.habit_value)
-              : habitLog.habit_value === "yes"
-              ? 10
-              : 0
-          ),
+        data: logs.map(log => {
+          const correspondingHabitLog = habitLogsForHabit.find(
+            hl => hl.log_id === log.log_id
+          )
+          if (!correspondingHabitLog) {
+            return 0
+          }
+          return habit.display_type === "slider"
+            ? parseFloat(correspondingHabitLog.habit_value)
+            : correspondingHabitLog.habit_value === "yes"
+            ? 10
+            : 0
+        }),
+        // data: habitLogs
+        //   .filter(habitLog => habit.habit_id === habitLog.habit_id)
+        //   .map(habitLog => {
+
+        //     return habitLog.habit_type === "slider"
+        //       ? parseFloat(habitLog.habit_value)
+        //       : habitLog.habit_value === "yes"
+        //       ? 10
+        //       : 0
+        //   }),
       }
     })
 
@@ -71,7 +88,7 @@ const GraphView = () => {
       // pointHoverBorderWidth: 2,
       // pointRadius: 1,
       // pointHitRadius: 10,
-      data: logs.map(log => log.mood_value),
+      data: logs.map(log => (log.mood_value ? log.mood_value : 0)),
     })
 
     const data = {
