@@ -38,18 +38,9 @@ const App = () => {
     return "Loading..."
   }
 
-  const logOut = async () => {
-    await Auth.signOut()
-  }
-
   return (
     <Layout>
       <Log habits={habits} />
-      <Link to="/">
-        <Button onClick={logOut} variant="contained">
-          Log Out
-        </Button>
-      </Link>
     </Layout>
   )
 }
