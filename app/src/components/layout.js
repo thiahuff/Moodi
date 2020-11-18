@@ -11,11 +11,13 @@ import { useStaticQuery, graphql } from "gatsby"
 
 import Header from "./header"
 import "./layout.css"
+import Navbar from "./navbar"
 
 const Layout = ({ children }) => {
   return (
     <>
-      <Header siteTitle={"moodi"} />
+      {/* <Header siteTitle={"moodi"} /> */}
+      <Navbar />
       <div
         style={{
           margin: `0 auto`,

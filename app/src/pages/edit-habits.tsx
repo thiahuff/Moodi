@@ -150,9 +150,8 @@ const EditHabit = () => {
             </Fragment>
           )
         })}
-        <Button onClick={updateHabit} variant="contained">
-          Submit Changes
-        </Button>
+        {/* onClick={updateHabit} TODO: Add back to button below */}
+        <Button variant="contained">Submit Changes</Button>
       </form>
       <Button
         variant="contained"

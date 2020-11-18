@@ -10,7 +10,7 @@ import { Button, FormControl, Input, InputLabel } from "@material-ui/core"
 Auth.configure(config)
 
 const IndexPage = () => {
-  const { register, handleSubmit, errors, formState, getValues } = useForm()
+  const { register, handleSubmit } = useForm()
 
   const onSubmit = async formValues => {
     console.log(formValues)
@@ -19,7 +19,6 @@ const IndexPage = () => {
 
     navigate("/app")
   }
-  console.log(getValues())
 
   return (
     <Layout>
