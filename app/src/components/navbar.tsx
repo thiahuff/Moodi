@@ -2,24 +2,48 @@ import {
   AppBar,
   Button,
   IconButton,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
   SwipeableDrawer,
   Toolbar,
   Typography,
 } from "@material-ui/core"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import MenuIcon from "@material-ui/icons/Menu"
-import { Link } from "gatsby"
+import { Link, navigate } from "gatsby"
+import EqualizerIcon from "@material-ui/icons/Equalizer"
+import EditIcon from "@material-ui/icons/Edit"
+import DateRangeIcon from "@material-ui/icons/DateRange"
+import Axios from "axios"
+import Auth from "@aws-amplify/auth"
 
 const Navbar = () => {
   const [drawerOpen, setOpen] = useState(false)
+  const [loggedIn, setLoggedIn] = useState(false)
+
+  const isLoggedIn = async () => {
+    const user = await Auth.currentAuthenticatedUser()
+    setLoggedIn(!!user)
+  }
+
+  const logOut = async () => {
+    await Auth.signOut()
+  }
+
+  useEffect(() => {
+    isLoggedIn()
+  }, [])
+
   return (
     <>
-      <AppBar position="sticky">
+      <AppBar id="gradient" position="sticky">
         <Toolbar>
           <IconButton
             onClick={() => setOpen(true)}
             edge="start"
-            color="inherit"
+            // color="inherit"
             aria-label="menu"
           >
             <MenuIcon />
@@ -36,7 +60,13 @@ const Navbar = () => {
             </Link>
           </h1>
           <Link to="/">
-            <Button color="inherit">Login</Button>
+            {loggedIn ? (
+              <Button onClick={logOut} color="inherit">
+                Log Out
+              </Button>
+            ) : (
+              <Button color="inherit">Login</Button>
+            )}
           </Link>
         </Toolbar>
       </AppBar>
@@ -46,9 +76,32 @@ const Navbar = () => {
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
       >
-        <Link to="/edit-habits">Edit Habits</Link>
-        <Link to="/graph-view">Graph View</Link>
-        <Link to="/calendar-view">Calendar View</Link>
+        <List>
+          <Link to="/edit-habits">
+            <ListItem>
+              <ListItemIcon>
+                <EditIcon />
+              </ListItemIcon>
+              <ListItemText>Edit Habits</ListItemText>
+            </ListItem>
+          </Link>
+          <Link to="/graph-view">
+            <ListItem>
+              <ListItemIcon>
+                <EqualizerIcon />
+              </ListItemIcon>
+              <ListItemText>Graph View</ListItemText>
+            </ListItem>
+          </Link>
+          <Link to="/calendar">
+            <ListItem>
+              <ListItemIcon>
+                <DateRangeIcon />
+              </ListItemIcon>
+              <ListItemText>Calendar</ListItemText>
+            </ListItem>
+          </Link>
+        </List>
       </SwipeableDrawer>
     </>
   )

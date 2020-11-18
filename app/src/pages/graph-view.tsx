@@ -40,7 +40,9 @@ const GraphView = () => {
       )
       return {
         label: habit.name,
-        fill: habit.display_type === "slider" ? true : false,
+        fill:
+          // habit.display_type === "slider" ? true :
+          false,
         backgroundColor: colors[(index + 1) % colors.length],
         borderColor: colors[(index + 1) % colors.length],
         data: logs.map(log => {
@@ -70,7 +72,7 @@ const GraphView = () => {
     })
 
     datasets.unshift({
-      label: "Mood Data",
+      label: "Mood",
       fill: false,
       // lineTension: 0.1,
       backgroundColor: colors[0],
