@@ -84,6 +84,7 @@ class Log(db.Model):
             'log_id': self.log_id,
             'user_id': self.user_id,
             'date': self.date,
+            'mood_value': self.mood_value,
         }
 
 
