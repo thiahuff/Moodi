@@ -19,10 +19,10 @@ import {
 import React, { Fragment, useEffect, useState } from "react"
 import Layout from "../components/layout"
 import { Link, navigate } from "gatsby"
-import DeleteForeverIcon from "@material-ui/icons/DeleteForever"
 import Axios from "axios"
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline"
 import { Controller, useForm } from "react-hook-form"
+import HabitsForm from "../components/habits-form"
 
 const EditHabit = () => {
   const [isLoading, setIsLoading] = useState(true)
@@ -76,83 +76,9 @@ const EditHabit = () => {
   //   })
   // }
 
-  const deleteHabit = async () => {
-    alert(
-      "Are you sure you want to delete this habit? You will not be able to undo this action."
-    )
-  }
-
   return (
     <Layout>
-      <form>
-        <h1>Your Habits</h1>
-
-        {habits.map(habit => {
-          return (
-            <Fragment key={habit.habit_id}>
-              <TextField
-                label="Habit Name"
-                defaultValue={habit.name}
-                variant="outlined"
-              />
-              <TextField
-                label="Habit Description"
-                defaultValue={habit.description}
-                variant="outlined"
-              />
-              <FormControl variant="outlined">
-                <InputLabel id="habit-display-type">
-                  How do you want to track this habit?
-                </InputLabel>
-                <Controller
-                  as={
-                    <Select disabled labelId="habit-display-type">
-                      <MenuItem value="y/n">Yes or No</MenuItem>
-                      <MenuItem value="slider">1-10 sliding scale</MenuItem>
-                    </Select>
-                  }
-                  control={control}
-                  name="display_type"
-                  defaultValue={habit.display_type}
-                />
-              </FormControl>
-              <FormControl variant="outlined">
-                <InputLabel id="habit-type">
-                  What kind of habit is this?
-                </InputLabel>
-                <Controller
-                  as={
-                    <Select labelId="habit-type">
-                      <MenuItem value="passive">
-                        Neutral - I'm just keeping track
-                      </MenuItem>
-                      <MenuItem value="active-positive">
-                        Positive - I'm trying to do this more!
-                      </MenuItem>
-                      <MenuItem value="active-negative">
-                        Negative - I'm trying to do this less
-                      </MenuItem>
-                    </Select>
-                  }
-                  control={control}
-                  name="display_type"
-                  defaultValue={habit.habit_type}
-                />
-              </FormControl>
-
-              <Button
-                onClick={deleteHabit}
-                variant="contained"
-                endIcon={<DeleteForeverIcon />}
-              >
-                Delete Habit
-              </Button>
-            </Fragment>
-          )
-        })}
-        {/* onClick={updateHabit} TODO: Add back to button below */}
-        <Button variant="contained">Submit Changes</Button>
-      </form>
+      <HabitsForm habits={habits} />
       <Button
         variant="contained"
         endIcon={<AddCircleOutlineIcon />}
