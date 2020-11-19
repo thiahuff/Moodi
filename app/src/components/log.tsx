@@ -15,9 +15,9 @@ import dayjs from "dayjs"
 import React, { Fragment } from "react"
 import { useForm, useFieldArray, Controller } from "react-hook-form"
 
-const Log = ({ habits }) => {
+const Log = ({ defaultValues, onSubmit }) => {
   const { handleSubmit, control, register, setValue, trigger } = useForm({
-    defaultValues: { habits },
+    defaultValues,
   })
 
   const { fields } = useFieldArray({
@@ -25,40 +25,27 @@ const Log = ({ habits }) => {
     name: "habits",
   })
 
-  const onSubmit = async formValues => {
-    const { mood, habits } = formValues
-    console.log(formValues)
-    const user = await Auth.currentAuthenticatedUser()
-    const response = await Axios.post("http://localhost:5000/logs", {
-      user_id: user.username,
-      date: dayjs().format("MM-DD-YYYY"),
-    })
-    // TODO: Still need to send habits to the habit_log table with the log_id attached
-
-    const { log_id } = response.data
-    const habit_logs = habits.map(habit => {
-      const { habit_id, habit_value, notes } = habit
-      return { habit_id, habit_value, notes, user_id: user.username, log_id }
-    })
-    console.log(habit_logs)
-    const habitLogResponse = await Axios.post(
-      "http://localhost:5000/habit-logs",
-      { habit_logs }
-    )
-  }
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <h1>Today's Log</h1>
-      {/* TODO: change hardcoded Mood so the date gets sent to db */}
       <InputLabel>Today's Mood</InputLabel>
-      <Slider
-        defaultValue={5}
-        step={0.01}
-        max={10}
-        min={1}
-        valueLabelDisplay="on"
-        style={{ color: "blue" }}
+      <Controller
+        render={props => (
+          <Slider
+            {...props}
+            onChange={(_, value) => {
+              props.onChange(value)
+            }}
+            step={0.01}
+            max={10}
+            min={1}
+            valueLabelDisplay="on"
+            style={{ color: "blue" }}
+          />
+        )}
+        defaultValue={defaultValues.mood_value}
+        control={control}
+        name="mood_value"
       />
       {fields.map((habit, index) => {
         return (
@@ -95,6 +82,7 @@ const Log = ({ habits }) => {
                 }
                 name={`habits[${index}].habit_value`}
                 control={control}
+                defaultValue="yes"
               />
             ) : (
               <Controller
