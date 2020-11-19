@@ -19,8 +19,8 @@ import { Controller, useFieldArray, useForm } from "react-hook-form"
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever"
 import Axios from "axios"
 
-const HabitsForm = ({ habits }) => {
-  const { handleSubmit, control, register, setValue, trigger } = useForm({
+const HabitsForm = ({ habits, refreshHabits }) => {
+  const { handleSubmit, control, register } = useForm({
     defaultValues: { habits },
   })
 
@@ -46,23 +46,50 @@ const HabitsForm = ({ habits }) => {
   const confirmDeleteHabit = async () => {
     await Axios.delete(`http://localhost:5000/habits/${selectedHabit.habit_id}`)
     handleClose()
+    refreshHabits()
   }
+
+  const submitHabitChanges = async ({ habits }) => {
+    console.log(habits)
+    await Axios.put("http://localhost:5000/habits", {
+      habits,
+    })
+    refreshHabits()
+  }
+
   return (
-    <form>
+    <form onSubmit={handleSubmit(submitHabitChanges)}>
       <h1>Your Habits</h1>
 
-      {fields.map(habit => {
+      {fields.map((habit, index) => {
+        console.log(habit)
         return (
           <Fragment key={habit.habit_id}>
+            <input
+              style={{ display: "none" }}
+              name={`habits[${index}].habit_id`}
+              ref={register}
+              value={habit.habit_id}
+            />
+            <input
+              style={{ display: "none" }}
+              name={`habits[${index}].user_id`}
+              ref={register}
+              value={habit.user_id}
+            />
             <TextField
               label="Habit Name"
               defaultValue={habit.name}
               variant="outlined"
+              name={`habits[${index}].name`}
+              inputRef={register}
             />
             <TextField
               label="Habit Description"
               defaultValue={habit.description}
               variant="outlined"
+              name={`habits[${index}].description`}
+              inputRef={register}
             />
             <FormControl variant="outlined">
               <InputLabel id="habit-display-type">
@@ -76,7 +103,8 @@ const HabitsForm = ({ habits }) => {
                   </Select>
                 }
                 control={control}
-                name="display_type"
+                name={`habits[${index}].display_type`}
+                ref={register}
                 defaultValue={habit.display_type}
               />
             </FormControl>
@@ -99,8 +127,9 @@ const HabitsForm = ({ habits }) => {
                   </Select>
                 }
                 control={control}
-                name="display_type"
                 defaultValue={habit.habit_type}
+                name={`habits[${index}].habit_type`}
+                ref={register}
               />
             </FormControl>
 
@@ -146,7 +175,9 @@ const HabitsForm = ({ habits }) => {
         )
       })}
       {/* onClick={updateHabit} TODO: Add back to button below */}
-      <Button variant="contained">Submit Changes</Button>
+      <Button variant="contained" type="submit">
+        Submit Changes
+      </Button>
     </form>
   )
 }
