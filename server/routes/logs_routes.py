@@ -1,5 +1,5 @@
 from app import app
-from crud.logs import create_log, get_logs_from_db, update_log, get_logs_by_user, get_log_by_id, delete_log_by_id
+from crud.logs import create_log, get_logs_from_db, update_log, get_logs_by_user, get_log_by_id, delete_log_by_id, get_log_by_user_and_date
 from model import Log
 from flask import jsonify, request
 
@@ -50,6 +50,12 @@ def update_logs():
 def logs_by_user_id(user_id):
     logs = get_logs_by_user(user_id)
     return jsonify([log.serialize for log in logs])
+
+
+@app.route('/logs/user/<user_id>/<date>')
+def log_by_user_id_and_date(user_id, date):
+    log = get_log_by_user_and_date(user_id, date)
+    return jsonify(log.serialize)
 
 
 @app.route('/logs/<log_id>', methods=['GET', 'DELETE'])
