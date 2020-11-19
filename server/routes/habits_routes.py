@@ -33,8 +33,8 @@ def get_all_habits():
 
 def update_habits():
     request_body = request.get_json()
-    if isinstance(request_body, list):
-        for habit in request_body:
+    if request_body.get("habits") is not None:
+        for habit in request_body["habits"]:
             if habit["habit_id"] is not None:
                 update_habit(habit)
     else:
