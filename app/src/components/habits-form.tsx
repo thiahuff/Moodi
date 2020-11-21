@@ -149,12 +149,13 @@ const HabitsForm = ({ habits, refreshHabits }) => {
                 aria-describedby="alert-dialog-description"
               >
                 <DialogTitle id="alert-dialog-title">
-                  {`Delete ${habit.habit_name}`}
+                  {`Delete ${habit.name}?`}
                 </DialogTitle>
                 <DialogContent>
                   <DialogContentText id="alert-dialog-description">
                     Are you sure you want to delete this habit? You will not be
-                    able to undo this action.
+                    able to undo this action and all logs for this habit will be
+                    deleted.
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>
