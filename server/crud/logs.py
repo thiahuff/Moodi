@@ -1,4 +1,5 @@
 from model import db, Log
+from sqlalchemy import asc
 
 
 def create_log(log_instance):
@@ -31,7 +32,8 @@ def update_log(log):
 
 def get_logs_by_user(user_id):
     """query for logs by user_id."""
-    logs = db.session.query(Log).filter(Log.user_id == user_id).all()
+    logs = db.session.query(Log).filter(
+        Log.user_id == user_id).order_by(Log.date).all()
 
     return logs
 

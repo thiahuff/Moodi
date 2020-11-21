@@ -55,6 +55,8 @@ def logs_by_user_id(user_id):
 @app.route('/logs/user/<user_id>/<date>')
 def log_by_user_id_and_date(user_id, date):
     log = get_log_by_user_and_date(user_id, date)
+    if log is None:
+        return jsonify(None)
     return jsonify(log.serialize)
 
 

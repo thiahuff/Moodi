@@ -52,7 +52,7 @@ class Habit(db.Model):
     description = db.Column(db.String)
     display_type = db.Column(db.String, nullable=False)
     habit_type = db.Column(db.String, nullable=False)
-    user_id = db.Column(db.ForeignKey('users.user_id'))
+    user_id = db.Column(db.ForeignKey('users.user_id', ondelete="cascade"))
 
     @property
     def serialize(self):
@@ -73,7 +73,7 @@ class Log(db.Model):
 
     log_id = db.Column(UUID(as_uuid=True), primary_key=True,
                        default=uuid.uuid4, unique=True, nullable=False)
-    user_id = db.Column(db.ForeignKey('users.user_id'))
+    user_id = db.Column(db.ForeignKey('users.user_id', ondelete="cascade"))
     date = db.Column(db.DateTime, nullable=False)
     mood_value = db.Column(db.Float)
 
@@ -94,13 +94,13 @@ class Habit_Log(db.Model):
 
     habit_log_id = db.Column(UUID(as_uuid=True), primary_key=True,
                              default=uuid.uuid4, unique=True, nullable=False)
-    habit_id = db.Column(db.ForeignKey('habits.habit_id'))
-    log_id = db.Column(db.ForeignKey('logs.log_id'))
-    user_id = db.Column(db.ForeignKey('users.user_id'))
+    habit_id = db.Column(db.ForeignKey('habits.habit_id', ondelete="cascade"))
+    log_id = db.Column(db.ForeignKey('logs.log_id', ondelete="cascade"))
+    user_id = db.Column(db.ForeignKey('users.user_id', ondelete="cascade"))
     habit_value = db.Column(db.String)
     notes = db.Column(db.String)
 
-    @property
+    @ property
     def serialize(self):
         """Return object data in easily serializable format"""
         return {

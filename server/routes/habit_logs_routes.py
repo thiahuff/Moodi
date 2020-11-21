@@ -16,7 +16,7 @@ def access_habit_log():
 
 def create_new_habit_log():
     request_body = request.get_json()
-    if request_body["habit_logs"] is not None:
+    if request_body.get("habit_logs") is not None:
         habit_logs = []
         for habit_log_json_obj in request_body["habit_logs"]:
             habit_log = Habit_Log(**habit_log_json_obj)
@@ -36,10 +36,12 @@ def get_all_habit_logs():
 
 def update_habit_logs():
     request_body = request.get_json()
-    if isinstance(request_body, list):
-        for habit_log in request_body:
-            if habit_log["habit_log_id"] is not None:
+    if request_body.get("habit_logs") is not None:
+        for habit_log in request_body["habit_logs"]:
+            if habit_log.get("habit_log_id") is not None:
                 update_habit_log(habit_log)
+            else:
+                create_habit_log(Habit_Log(**habit_log))
     else:
         result = update_habit_log(request_body)
 
