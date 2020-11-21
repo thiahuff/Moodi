@@ -1,6 +1,9 @@
 import React from "react"
 import Layout from "../components/layout"
+import Calendar from "../components/calendar"
 
-const Calendar = () => {}
+const CalendarView = () => {
+  return <Calendar />
+}
 
-export default Calendar
+export default CalendarView
