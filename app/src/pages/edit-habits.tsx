@@ -30,6 +30,7 @@ const EditHabit = () => {
   const { register, handleSubmit, errors, control } = useForm()
 
   const getUserHabits = async () => {
+    setIsLoading(true)
     const user = await Auth.currentAuthenticatedUser()
     console.log(user)
     const response = await Axios.get(
@@ -51,6 +52,7 @@ const EditHabit = () => {
       ...formValues,
       user_id: user.username,
     })
+    getUserHabits()
   }
 
   const [open, setOpen] = useState(false)
@@ -78,7 +80,7 @@ const EditHabit = () => {
 
   return (
     <Layout>
-      <HabitsForm habits={habits} />
+      <HabitsForm habits={habits} refreshHabits={getUserHabits} />
       <Button
         variant="contained"
         endIcon={<AddCircleOutlineIcon />}

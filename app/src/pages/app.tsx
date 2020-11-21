@@ -40,7 +40,7 @@ const App = () => {
     )
 
     const defaultValues = {
-      mood_value: log.mood_value || 5,
+      mood_value: log?.mood_value || 5,
       habits,
     }
 

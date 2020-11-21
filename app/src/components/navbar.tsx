@@ -18,6 +18,7 @@ import EditIcon from "@material-ui/icons/Edit"
 import DateRangeIcon from "@material-ui/icons/DateRange"
 import Axios from "axios"
 import Auth from "@aws-amplify/auth"
+import HomeIcon from "@material-ui/icons/Home"
 
 const Navbar = () => {
   const [drawerOpen, setOpen] = useState(false)
@@ -77,6 +78,15 @@ const Navbar = () => {
         onOpen={() => setOpen(true)}
       >
         <List>
+          <Link to="/app">
+            <ListItem>
+              <ListItemIcon>
+                <HomeIcon />
+              </ListItemIcon>
+              <ListItemText>Home</ListItemText>
+            </ListItem>
+          </Link>
+
           <Link to="/edit-habits">
             <ListItem>
               <ListItemIcon>

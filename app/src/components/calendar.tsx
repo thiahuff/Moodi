@@ -1,14 +1,14 @@
 import dayjs from "dayjs"
 import React from "react"
 
-const getLeadingDays: number[] = (date: dayjs.Dayjs) => {
-  const startDay = date.day() //0
+const getLeadingDays = (date: dayjs.Dayjs): number[] => {
+  const startDay = date.day() //0 -sunday => 6 saturday
   const previousMonth = date.subtract(1, "month")
 
-  return null
+  return []
 }
 
-const getSucceedingDays: number[] = (date: dayjs.Dayjs) => {
+const getSucceedingDays = (date: dayjs.Dayjs): number[] => {
   const nextMonth = date.add(1, "month")
 
   return []
