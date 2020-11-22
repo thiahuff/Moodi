@@ -19,6 +19,7 @@ import DateRangeIcon from "@material-ui/icons/DateRange"
 import Axios from "axios"
 import Auth from "@aws-amplify/auth"
 import HomeIcon from "@material-ui/icons/Home"
+import "./navbar.css"
 
 const Navbar = () => {
   const [drawerOpen, setOpen] = useState(false)
@@ -60,7 +61,7 @@ const Navbar = () => {
               moodi
             </Link>
           </h1>
-          <Link to="/">
+          <Link className="logout" to="/">
             {loggedIn ? (
               <Button onClick={logOut} color="inherit">
                 Log Out
