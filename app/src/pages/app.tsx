@@ -16,7 +16,7 @@ import dayjs from "dayjs"
 import Axios from "axios"
 import { useForm, useFieldArray, Controller } from "react-hook-form"
 import Log from "../components/log"
-import { Habit, Log as LogType } from "../types"
+import { Habit, Log as LogType, HabitLog } from "../types"
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true)
@@ -25,26 +25,57 @@ const App = () => {
 
   const getUserDailyLogData = async () => {
     const user = await Auth.currentAuthenticatedUser()
+    // Get user logs
     const { data: log } = await Axios.get<LogType>(
       `http://localhost:5000/logs/user/${user.username}/${dayjs().format(
         "MM-DD-YYYY"
       )}`
     )
-
-    if (log) {
-      setTodaysLog(log)
-    }
-
+    // Get user habits
     const { data: habits } = await Axios.get<Habit[]>(
       `http://localhost:5000/habits/user/${user.username}`
     )
 
-    const defaultValues = {
-      mood_value: log?.mood_value || 5,
-      habits,
+    if (log) {
+      setTodaysLog(log)
+
+      // call api to get habit logs
+      const { data: habitLogs } = await Axios.get<HabitLog[]>(
+        `http://localhost:5000/habit-logs/log/${log.log_id}`
+      )
+      // join habits to habit logs
+      const joinedData = habits.map(habit => {
+        // grab associated habit_log
+        const matchingLog = habitLogs.find(
+          habitLog => habitLog.habit_id === habit.habit_id
+        )
+
+        //return combined object
+        return {
+          ...habit,
+          ...matchingLog,
+          habit_value:
+            habit.display_type === "slider"
+              ? parseFloat(matchingLog.habit_value)
+              : matchingLog.habit_value,
+        }
+      })
+      // set default values to joined data
+      const defaultValues = {
+        mood_value: log.mood_value || 5,
+        habits: joinedData,
+      }
+
+      setDefaultValues(defaultValues)
+    } else {
+      const defaultValues = {
+        mood_value: 5,
+        habits,
+      }
+
+      setDefaultValues(defaultValues)
     }
 
-    setDefaultValues(defaultValues)
     setIsLoading(false)
   }
 
@@ -84,8 +115,15 @@ const App = () => {
 
     const { log_id } = response.data
     const habit_logs = habits.map(habit => {
-      const { habit_id, habit_value, notes } = habit
-      return { habit_id, habit_value, notes, user_id: user.username, log_id }
+      const { habit_id, habit_value, notes, habit_log_id } = habit
+      return {
+        habit_id,
+        habit_value,
+        notes,
+        user_id: user.username,
+        log_id,
+        habit_log_id,
+      }
     })
     const habitLogResponse = await Axios.put(
       "http://localhost:5000/habit-logs",
