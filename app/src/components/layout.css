@@ -17,6 +17,11 @@
   );
 }
 
+/* Half values:
+dark-moderate-blue rgba(64,71,140)
+dark-blue #1f6397 has RGB values of R:31, G:99, B:151
+ */
+
 /* CSS HEX
 --dark-slate-blue: #54478cff;
 --sapphire-blue: #2c699aff;

@@ -14,6 +14,7 @@ const CalendarView = () => {
     const { data: logs } = await Axios.get(
       `http://localhost:5000/logs/user/${user.username}`
     )
+    setLogData(logs)
   }
 
   useEffect(() => {
@@ -22,7 +23,7 @@ const CalendarView = () => {
 
   return (
     <Layout>
-      <Calendar logs={[]} />
+      <Calendar logs={logData} />
     </Layout>
   )
 }

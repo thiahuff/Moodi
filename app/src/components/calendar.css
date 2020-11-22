@@ -2,6 +2,7 @@
   margin: 1rem;
   border-left: 1px solid black;
   border-top: 1px solid black;
+  min-height: max-content;
 }
 
 .calendar-week {
@@ -12,4 +13,63 @@
   flex: 1;
   border-right: 1px solid black;
   border-bottom: 1px solid black;
+  height: min(140px, calc(100vw / 8));
+}
+
+.calendar-month-title {
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+  font-size: large;
+  display: flex;
+  justify-content: center;
+}
+
+.dark-slate-blue {
+  background-color: rgba(84, 71, 140, 1);
+}
+
+.dark-moderate-blue {
+}
+
+.sapphire-blue {
+  background-color: rgba(44, 105, 154, 1);
+}
+
+.dark-blue {
+}
+
+.blue-munsell {
+  background-color: rgba(18, 127, 162, 1);
+}
+
+.keppel {
+  background-color: rgba(13, 179, 158, 1);
+}
+
+.medium-aquamarine {
+  background-color: rgba(22, 219, 147, 1);
+}
+
+.light-green {
+  background-color: rgba(131, 227, 119, 1);
+}
+
+.inchworm {
+  background-color: rgba(185, 231, 105, 1);
+}
+
+.corn {
+  background-color: rgba(239, 234, 90, 1);
+}
+
+.maize-crayola {
+  background-color: rgba(241, 196, 83, 1);
+}
+
+.sandy-brown {
+  background-color: rgba(242, 158, 76, 1);
+}
+
+.no-log-color {
+  background-color: rgba(255, 255, 255, 0.5);
 }
