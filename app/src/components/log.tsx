@@ -56,6 +56,12 @@ const Log = ({ defaultValues, onSubmit }) => {
               ref={register}
               value={habit.habit_id}
             />
+            <input
+              style={{ display: "none" }}
+              name={`habits[${index}].habit_log_id`}
+              ref={register}
+              value={habit.habit_log_id}
+            />
 
             {habit.description ? (
               <Tooltip title={habit.description} placement="right">
@@ -82,7 +88,7 @@ const Log = ({ defaultValues, onSubmit }) => {
                 }
                 name={`habits[${index}].habit_value`}
                 control={control}
-                defaultValue="yes"
+                defaultValue={habit.habit_value || "yes"}
               />
             ) : (
               <Controller
@@ -98,18 +104,24 @@ const Log = ({ defaultValues, onSubmit }) => {
                     valueLabelDisplay="on"
                   />
                 )}
-                defaultValue={5}
+                defaultValue={habit.habit_value || 5}
                 control={control}
                 name={`habits[${index}].habit_value`}
               />
             )}
-            <TextField
-              label="Notes"
-              multiline
-              rows={4}
-              variant="outlined"
-              inputRef={register}
+            <Controller
+              render={props => (
+                <TextField
+                  {...props}
+                  label="Notes"
+                  multiline
+                  rows={4}
+                  variant="outlined"
+                />
+              )}
               name={`habits[${index}].notes`}
+              defaultValue={habit.notes || ""}
+              control={control}
             />
           </Fragment>
         )
