@@ -1,5 +1,5 @@
 from app import app
-from crud.habit_logs import create_habit_log, get_habit_logs_from_db, update_habit_log, get_habit_logs_by_user, get_habit_log_by_id, delete_habit_log_by_id
+from crud.habit_logs import create_habit_log, get_habit_logs_from_db, update_habit_log, get_habit_logs_by_user, get_habit_log_by_id, delete_habit_log_by_id, get_habit_logs_by_log_id
 from model import Habit_Log
 from flask import jsonify, request
 
@@ -12,6 +12,31 @@ def access_habit_log():
         return get_all_habit_logs()
     if request.method == 'PUT':
         return update_habit_logs()
+
+
+@app.route('/habit-logs/user/<user_id>')
+def habit_logs_by_user_id(user_id):
+    habit_logs = get_habit_logs_by_user(user_id)
+    return jsonify([habit_log.serialize for habit_log in habit_logs])
+
+
+@app.route('/habit-logs/<habit_log_id>', methods=['GET', 'DELETE'])
+def habit_log_by_id(habit_log_id):
+    if request.method == 'GET':
+        habit_log = get_habit_log_by_id(habit_log_id)
+        if habit_log == None:
+            return jsonify(None)
+        return jsonify(habit_log.serialize)
+    else:
+        delete_habit_log_by_id(habit_log_id)
+        return jsonify({"success": True})
+
+
+@ app.route('/habit-logs/log/<log_id>', methods=['GET'])
+def habit_logs_by_log_id(log_id):
+    habit_logs = get_habit_logs_by_log_id(log_id)
+
+    return jsonify([habit_log.serialize for habit_log in habit_logs])
 
 
 def create_new_habit_log():
@@ -46,21 +71,3 @@ def update_habit_logs():
         result = update_habit_log(request_body)
 
     return jsonify(request.get_json())
-
-
-@ app.route('/habit-logs/user/<user_id>')
-def habit_logs_by_user_id(user_id):
-    habit_logs = get_habit_logs_by_user(user_id)
-    return jsonify([habit_log.serialize for habit_log in habit_logs])
-
-
-@ app.route('/habit-logs/<habit_log_id>', methods=['GET', 'DELETE'])
-def habit_log_by_id(habit_log_id):
-    if request.method == 'GET':
-        habit_log = get_habit_log_by_id(habit_log_id)
-        if habit_log == None:
-            return jsonify(None)
-        return jsonify(habit_log.serialize)
-    else:
-        delete_habit_log_by_id(habit_log_id)
-        return jsonify({"success": True})

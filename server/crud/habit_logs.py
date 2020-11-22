@@ -38,3 +38,7 @@ def delete_habit_log_by_id(habit_log_id):
     db.session.query(Habit_Log).filter_by(habit_log_id=habit_log_id).delete()
     db.session.commit()
     return True
+
+
+def get_habit_logs_by_log_id(log_id):
+    return db.session.query(Habit_Log).filter_by(log_id=log_id).all()
