@@ -3,6 +3,7 @@ import Axios from "axios"
 import dayjs from "dayjs"
 import React, { useEffect, useState } from "react"
 import { Habit, HabitLog, Log as LogType } from "../types"
+import Loader from "./loader"
 import LogForm from "./log-form"
 
 interface Props {
@@ -134,7 +135,7 @@ const LogFormContainer = ({ date, afterSubmit }: Props) => {
   }
 
   if (isLoading) {
-    return <div>"Loading..."</div>
+    return <Loader />
   }
 
   return (

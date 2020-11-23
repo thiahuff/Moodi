@@ -23,6 +23,7 @@ import Axios from "axios"
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline"
 import { Controller, useForm } from "react-hook-form"
 import HabitsForm from "../components/habits-form"
+import Loader from "../components/loader"
 
 const EditHabit = () => {
   const [isLoading, setIsLoading] = useState(true)
@@ -66,17 +67,8 @@ const EditHabit = () => {
   }
 
   if (isLoading) {
-    return "Loading..."
+    return <Loader />
   }
-
-  // TODO: get the formvalues to put new habits to db
-  // const updateHabit = async formValues () => {
-  //   const user = await Auth.currentAuthenticatedUser()
-  //   Axios.put("http://localhost:5000/habits", {
-  //     ...formValues,
-  //     user_id: user.username,
-  //   })
-  // }
 
   return (
     <Layout>

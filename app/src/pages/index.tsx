@@ -13,10 +13,7 @@ const IndexPage = () => {
   const { register, handleSubmit } = useForm()
 
   const onSubmit = async formValues => {
-    console.log(formValues)
     const user = await Auth.signIn(formValues)
-    console.log(user)
-
     navigate("/app")
   }
 
