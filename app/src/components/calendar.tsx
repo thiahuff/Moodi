@@ -1,8 +1,17 @@
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@material-ui/core"
 import dayjs from "dayjs"
-import React from "react"
+import React, { useState } from "react"
 import { Log } from "../types"
 
-import "./calendar.css"
+import "./calendar.scss"
+import LogFormContainer from "./log-form-container"
 
 interface CalendarDay {
   className: string
@@ -53,12 +62,19 @@ const moodValueToColor = mood_value => {
   else if (mood_value <= 2) return "sapphire-blue"
   else if (mood_value <= 2.5) return "dark-blue"
   else if (mood_value <= 3) return "blue-munsell"
+  else if (mood_value <= 3.5) return "dark-cyan"
   else if (mood_value <= 4) return "keppel"
+  else if (mood_value <= 4.5) return "strong-cyan-lime"
   else if (mood_value <= 5) return "medium-aquamarine"
+  else if (mood_value <= 5.5) return "soft-cyan-lime"
   else if (mood_value <= 6) return "light-green"
+  else if (mood_value <= 6.5) return "soft-green"
   else if (mood_value <= 7) return "inchworm"
+  else if (mood_value <= 7.5) return "soft-yellow"
   else if (mood_value <= 8) return "corn"
+  else if (mood_value <= 8.5) return "sunshine-yellow"
   else if (mood_value <= 9) return "maize-crayola"
+  else if (mood_value <= 9.5) return "soft-orange"
   else if (mood_value <= 10) return "sandy-brown"
 }
 
@@ -102,27 +118,58 @@ const createWeeks = allDays => {
   return result
 }
 
-const Calendar = ({ logs }) => {
+const Calendar = ({ logs, refreshLogs }) => {
   const now = dayjs()
   const weeks = createCalendar(now, logs)
 
+  const [modalOpen, setModalOpen] = useState(false)
+  const [selectedDate, setSelectedDate] = useState(null)
+
+  // handleOpen (date) => open modal + set selected date
+  // handleClose => close modal, clear selected date
+
+  const handleOpenModal = date => {
+    setModalOpen(true)
+    setSelectedDate(date)
+  }
+
+  const handleCloseModal = () => {
+    setModalOpen(false)
+    setSelectedDate(null)
+  }
+
+  const afterSubmit = async () => {
+    await refreshLogs()
+    handleCloseModal()
+  }
+
   return (
-    <div className="calendar">
-      <div className="calendar-month-title">{now.format("MMMM YYYY")}</div>
-      {weeks.map((week, index) => {
-        return (
-          <div key={index} className="calendar-week">
-            {week.map((day, index) => {
-              return (
-                <div className={`calendar-day ${day.className}`}>
-                  {day.date.format("DD")}
-                </div>
-              )
-            })}
-          </div>
-        )
-      })}
-    </div>
+    <>
+      <div className="calendar">
+        <div className="calendar-month-title">{now.format("MMMM YYYY")}</div>
+        {weeks.map((week, index) => {
+          return (
+            <div key={index} className="calendar-week">
+              {week.map((day, index) => {
+                return (
+                  <div
+                    className={`calendar-day ${day.className}`}
+                    onClick={() => handleOpenModal(day.date)}
+                  >
+                    {day.date.format("DD")}
+                  </div>
+                )
+              })}
+            </div>
+          )
+        })}
+      </div>
+      <Dialog open={modalOpen} onClose={handleCloseModal}>
+        <DialogContent>
+          <LogFormContainer date={selectedDate} afterSubmit={afterSubmit} />
+        </DialogContent>
+      </Dialog>
+    </>
   )
 }
 

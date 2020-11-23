@@ -23,7 +23,7 @@ const CalendarView = () => {
 
   return (
     <Layout>
-      <Calendar logs={logData} />
+      <Calendar logs={logData} refreshLogs={getUserData} />
     </Layout>
   )
 }
