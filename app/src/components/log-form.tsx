@@ -96,7 +96,7 @@ const LogForm = ({ defaultValues, onSubmit }) => {
               <Controller
                 render={props => (
                   <Slider
-                    id="slider-standard"
+                    className="slider-gradient"
                     {...props}
                     onChange={(_, value) => {
                       props.onChange(value)
