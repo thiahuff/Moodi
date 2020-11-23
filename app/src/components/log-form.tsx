@@ -14,6 +14,7 @@ import Axios from "axios"
 import dayjs from "dayjs"
 import React, { Fragment } from "react"
 import { useForm, useFieldArray, Controller } from "react-hook-form"
+import "./layout.scss"
 
 const LogForm = ({ defaultValues, onSubmit }) => {
   const { handleSubmit, control, register, setValue, trigger } = useForm({
@@ -32,6 +33,7 @@ const LogForm = ({ defaultValues, onSubmit }) => {
       <Controller
         render={props => (
           <Slider
+            className="slider-gradient"
             {...props}
             onChange={(_, value) => {
               props.onChange(value)
@@ -40,7 +42,7 @@ const LogForm = ({ defaultValues, onSubmit }) => {
             max={10}
             min={1}
             valueLabelDisplay="on"
-            style={{ color: "blue" }}
+            // style={{ color: "blue" }}
           />
         )}
         defaultValue={defaultValues.mood_value}
@@ -102,6 +104,7 @@ const LogForm = ({ defaultValues, onSubmit }) => {
                     max={10}
                     min={1}
                     valueLabelDisplay="on"
+                    color="primary"
                   />
                 )}
                 defaultValue={habit.habit_value || 5}
