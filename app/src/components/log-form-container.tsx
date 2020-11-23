@@ -5,7 +5,12 @@ import React, { useEffect, useState } from "react"
 import { Habit, HabitLog, Log as LogType } from "../types"
 import LogForm from "./log-form"
 
-const LogFormContainer = ({ date, afterSubmit = null }) => {
+interface Props {
+  date: dayjs.Dayjs
+  afterSubmit?: Function
+}
+
+const LogFormContainer = ({ date, afterSubmit }: Props) => {
   const [isLoading, setIsLoading] = useState(true)
   const [defaultValues, setDefaultValues] = useState({})
   const [todaysLog, setTodaysLog] = useState(null)
@@ -15,9 +20,9 @@ const LogFormContainer = ({ date, afterSubmit = null }) => {
     // Get user logs
     // TODO: Dates are awful I'm so sorry
     const { data: log } = await Axios.get<LogType>(
-      `http://localhost:5000/logs/user/${user.username}/${date
-        .add(1, "day")
-        .format("MM-DD-YYYY")}`
+      `http://localhost:5000/logs/user/${user.username}/${date.format(
+        "MM-DD-YYYY"
+      )}`
     )
     // Get user habits
     const { data: habits } = await Axios.get<Habit[]>(
@@ -79,7 +84,7 @@ const LogFormContainer = ({ date, afterSubmit = null }) => {
     const user = await Auth.currentAuthenticatedUser()
     const response = await Axios.post("http://localhost:5000/logs", {
       user_id: user.username,
-      date: date.format("MM-DD-YYYY"),
+      date: date.toISOString(),
       mood_value,
     })
 
@@ -92,7 +97,9 @@ const LogFormContainer = ({ date, afterSubmit = null }) => {
       "http://localhost:5000/habit-logs",
       { habit_logs }
     )
-    afterSubmit()
+    if (afterSubmit) {
+      afterSubmit()
+    }
   }
 
   const onUpdateSubmit = async formValues => {
@@ -101,7 +108,7 @@ const LogFormContainer = ({ date, afterSubmit = null }) => {
     const response = await Axios.put("http://localhost:5000/logs", {
       log_id: todaysLog.log_id,
       user_id: user.username,
-      date: date.format("MM-DD-YYYY"),
+      date: todaysLog.date,
       mood_value,
     })
 
@@ -121,7 +128,9 @@ const LogFormContainer = ({ date, afterSubmit = null }) => {
       "http://localhost:5000/habit-logs",
       { habit_logs }
     )
-    afterSubmit()
+    if (afterSubmit) {
+      afterSubmit()
+    }
   }
 
   if (isLoading) {
