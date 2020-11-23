@@ -96,6 +96,7 @@ const LogForm = ({ defaultValues, onSubmit }) => {
               <Controller
                 render={props => (
                   <Slider
+                    id="slider-standard"
                     {...props}
                     onChange={(_, value) => {
                       props.onChange(value)
@@ -104,7 +105,6 @@ const LogForm = ({ defaultValues, onSubmit }) => {
                     max={10}
                     min={1}
                     valueLabelDisplay="on"
-                    color="primary"
                   />
                 )}
                 defaultValue={habit.habit_value || 5}

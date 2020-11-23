@@ -41,6 +41,14 @@
     opacity: 0;
   }
 }
+#slider-standard {
+  .MuiSlider-rail {
+    background-color: rgba(84, 71, 140, 1);
+  }
+  .MuiSlider-thumb {
+    color: rgba(84, 71, 140, 1);
+  }
+}
 
 /* Half values:
 dark-moderate-blue rgba(64,71,140, 1)
