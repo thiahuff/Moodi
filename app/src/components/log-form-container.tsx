@@ -122,7 +122,7 @@ const LogFormContainer = ({ date, afterSubmit }: Props) => {
         notes,
         user_id: user.username,
         log_id,
-        habit_log_id,
+        habit_log_id: habit_log_id || null,
       }
     })
     const habitLogResponse = await Axios.put(

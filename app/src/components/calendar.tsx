@@ -147,6 +147,15 @@ const Calendar = ({ logs, refreshLogs }) => {
     <>
       <div className="calendar">
         <div className="calendar-month-title">{now.format("MMMM YYYY")}</div>
+        <div className="calendar-days-of-week">
+          <div>Sunday</div>
+          <div>Monday</div>
+          <div>Tuesday</div>
+          <div>Wednesday</div>
+          <div>Thursday</div>
+          <div>Friday</div>
+          <div>Saturday</div>
+        </div>
         {weeks.map((week, index) => {
           return (
             <div key={index} className="calendar-week">
