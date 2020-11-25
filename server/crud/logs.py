@@ -1,12 +1,12 @@
 from model import db, Log
 from sqlalchemy import asc, extract
-import datetime
+from dateutil.parser import *
 
 
 def create_log(log_instance):
     """Create and return a new user."""
-    existing_log = db.session.query(Log).filter(
-        Log.user_id == log_instance.user_id, Log.date == log_instance.date).first()
+    existing_log = get_log_by_user_and_date(
+        log_instance.user_id, log_instance.date)
     if existing_log is not None:
         print("log already exists!")
         existing_log.mood_value = log_instance.mood_value
@@ -52,8 +52,7 @@ def delete_log_by_id(log_id):
 def get_log_by_user_and_date(user_id, date):
     """query for logs by user_id and date."""
     # Convert date string to datetime python object
-    format_str = '%m-%d-%Y'
-    date_to_query = datetime.datetime.strptime(date, format_str)
+    date_to_query = parse(date)
 
     # Query based on date and user
     log = db.session.query(Log).filter(

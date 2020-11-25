@@ -129,6 +129,9 @@ def connect_to_db(flask_app, db_uri='postgresql:///moodi', echo=True):
         create_database(engine.url)
         db.create_all(app=flask_app)
 
+    # with engine.connect() as con:
+    #     rs = con.execute('DELETE FROM logs')
+
     print(database_exists(engine.url))
     print('Connected to the db!')
 

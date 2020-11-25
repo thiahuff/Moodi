@@ -19,11 +19,8 @@ const LogFormContainer = ({ date, afterSubmit }: Props) => {
   const getUserDailyLogData = async () => {
     const user = await Auth.currentAuthenticatedUser()
     // Get user logs
-    // TODO: Dates are awful I'm so sorry
     const { data: log } = await Axios.get<LogType>(
-      `http://localhost:5000/logs/user/${user.username}/${date.format(
-        "MM-DD-YYYY"
-      )}`
+      `http://localhost:5000/logs/user/${user.username}/${date.toISOString()}`
     )
     // Get user habits
     const { data: habits } = await Axios.get<Habit[]>(

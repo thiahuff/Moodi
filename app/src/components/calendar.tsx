@@ -5,14 +5,14 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  TextField,
 } from "@material-ui/core"
 import dayjs from "dayjs"
 import React, { useState } from "react"
 import { Log } from "../types"
-
-import "./calendar.scss"
 import LogFormContainer from "./log-form-container"
 
+import "./calendar.scss"
 interface CalendarDay {
   className: string
   date: dayjs.Dayjs
@@ -36,7 +36,8 @@ const createCalendar = (date: dayjs.Dayjs, logs: Log[]): CalendarDay[][] => {
   ]
 
   const calendarArray: CalendarDay[] = combinedDates.map(date => {
-    const log = logs.find(l => dayjs(l.date).isSame(date, "day"))
+    const log = logs.find(l => dayjs(l.date).isSame(date.startOf("day"), "day"))
+    if (log) console.log(date, log.date)
 
     if (!log) {
       return {
@@ -56,7 +57,6 @@ const createCalendar = (date: dayjs.Dayjs, logs: Log[]): CalendarDay[][] => {
 }
 
 const moodValueToColor = mood_value => {
-  console.log(mood_value)
   if (mood_value == 1) return "dark-slate-blue"
   else if (mood_value <= 1.5) return "dark-moderate-blue"
   else if (mood_value <= 2) return "sapphire-blue"
@@ -123,10 +123,6 @@ const Calendar = ({ logs, refreshLogs }) => {
   const weeks = createCalendar(now, logs)
 
   const [modalOpen, setModalOpen] = useState(false)
-  const [selectedDate, setSelectedDate] = useState(null)
-
-  // handleOpen (date) => open modal + set selected date
-  // handleClose => close modal, clear selected date
 
   const handleOpenModal = date => {
     setModalOpen(true)

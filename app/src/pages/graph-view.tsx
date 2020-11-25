@@ -5,6 +5,14 @@ import SEO from "../components/seo"
 import Auth from "@aws-amplify/auth"
 import Axios from "axios"
 import dayjs from "dayjs"
+import DayJsUtils from "@material-ui/pickers/adapter/dayjs"
+import {
+  DateRangePicker,
+  DateRange,
+  DateRangeDelimiter,
+  LocalizationProvider,
+} from "@material-ui/pickers"
+import { TextField } from "@material-ui/core"
 
 const colors = [
   "rgba(84, 71, 140, 1)",
@@ -21,14 +29,30 @@ const colors = [
 
 const GraphView = () => {
   const [data, setData] = useState(null)
+  const [selectedDate, setSelectedDate] = React.useState([
+    dayjs().subtract(90, "days"),
+    dayjs(),
+  ])
 
   const getUserData = async () => {
     const user = await Auth.currentAuthenticatedUser()
     const { data: logs } = await Axios.get(
-      `http://localhost:5000/logs/user/${user.username}`
+      `http://localhost:5000/logs/user/${user.username}`,
+      {
+        params: {
+          start_date: selectedDate[0],
+          end_date: selectedDate[1],
+        },
+      }
     )
     const { data: habitLogs } = await Axios.get(
-      `http://localhost:5000/habit-logs/user/${user.username}`
+      `http://localhost:5000/habit-logs/user/${user.username}`,
+      {
+        params: {
+          start_date: selectedDate[0],
+          end_date: selectedDate[1],
+        },
+      }
     )
     const { data: habits } = await Axios.get(
       `http://localhost:5000/habits/user/${user.username}`
@@ -40,9 +64,7 @@ const GraphView = () => {
       )
       return {
         label: habit.name,
-        fill:
-          // habit.display_type === "slider" ? true :
-          false,
+        fill: false,
         backgroundColor: colors[(index + 1) % colors.length],
         borderColor: colors[(index + 1) % colors.length],
         data: logs.map(log => {
@@ -58,16 +80,6 @@ const GraphView = () => {
             ? 10
             : 0
         }),
-        // data: habitLogs
-        //   .filter(habitLog => habit.habit_id === habitLog.habit_id)
-        //   .map(habitLog => {
-
-        //     return habitLog.habit_type === "slider"
-        //       ? parseFloat(habitLog.habit_value)
-        //       : habitLog.habit_value === "yes"
-        //       ? 10
-        //       : 0
-        //   }),
       }
     })
 
@@ -120,6 +132,21 @@ const GraphView = () => {
     <Layout>
       <SEO title="Graph View" />
       <h1>Graph View</h1>
+      <LocalizationProvider dateAdapter={DayJsUtils}>
+        <DateRangePicker
+          startText="Start Date"
+          endText="End Date"
+          value={selectedDate}
+          onChange={value => setSelectedDate(value)}
+          renderInput={(startProps, endProps) => (
+            <React.Fragment>
+              <TextField {...startProps} />
+              <DateRangeDelimiter> to </DateRangeDelimiter>
+              <TextField {...endProps} />
+            </React.Fragment>
+          )}
+        />
+      </LocalizationProvider>
       <Line
         data={data}
         options={{
