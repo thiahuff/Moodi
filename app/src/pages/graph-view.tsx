@@ -30,7 +30,7 @@ const colors = [
 const GraphView = () => {
   const [data, setData] = useState(null)
   const [selectedDate, setSelectedDate] = React.useState([
-    dayjs().subtract(90, "days"),
+    dayjs().subtract(60, "day"),
     dayjs(),
   ])
 
@@ -40,8 +40,8 @@ const GraphView = () => {
       `http://localhost:5000/logs/user/${user.username}`,
       {
         params: {
-          start_date: selectedDate[0],
-          end_date: selectedDate[1],
+          start_date: selectedDate[0].format("YYYY-MM-DD"),
+          end_date: selectedDate[1].format("YYYY-MM-DD"),
         },
       }
     )
@@ -49,8 +49,8 @@ const GraphView = () => {
       `http://localhost:5000/habit-logs/user/${user.username}`,
       {
         params: {
-          start_date: selectedDate[0],
-          end_date: selectedDate[1],
+          start_date: selectedDate[0].format("YYYY-MM-DD"),
+          end_date: selectedDate[1].format("YYYY-MM-DD"),
         },
       }
     )
@@ -125,8 +125,10 @@ const GraphView = () => {
   }
 
   useEffect(() => {
-    getUserData()
-  }, [])
+    if (selectedDate[0] && selectedDate[1]) {
+      getUserData()
+    }
+  }, [selectedDate])
 
   return (
     <Layout>

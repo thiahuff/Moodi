@@ -48,7 +48,9 @@ def update_logs():
 
 @app.route('/logs/user/<user_id>')
 def logs_by_user_id(user_id):
-    logs = get_logs_by_user(user_id)
+    start_date = request.args.get('start_date')
+    end_date = request.args.get('end_date')
+    logs = get_logs_by_user(user_id, start_date, end_date)
     return jsonify([log.serialize for log in logs])
 
 

@@ -20,7 +20,9 @@ const LogFormContainer = ({ date, afterSubmit }: Props) => {
     const user = await Auth.currentAuthenticatedUser()
     // Get user logs
     const { data: log } = await Axios.get<LogType>(
-      `http://localhost:5000/logs/user/${user.username}/${date.toISOString()}`
+      `http://localhost:5000/logs/user/${user.username}/${date.format(
+        "YYYY-MM-DD"
+      )}`
     )
     // Get user habits
     const { data: habits } = await Axios.get<Habit[]>(
@@ -82,7 +84,7 @@ const LogFormContainer = ({ date, afterSubmit }: Props) => {
     const user = await Auth.currentAuthenticatedUser()
     const response = await Axios.post("http://localhost:5000/logs", {
       user_id: user.username,
-      date: date.toISOString(),
+      date: date.startOf("day").utc(),
       mood_value,
     })
 

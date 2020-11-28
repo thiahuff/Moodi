@@ -10,6 +10,7 @@ import dayjs from "dayjs"
 import utc from "dayjs/plugin/utc"
 
 Auth.configure(config)
+dayjs.extend(utc)
 
 const IndexPage = () => {
   const { register, handleSubmit } = useForm()

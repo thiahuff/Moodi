@@ -30,12 +30,21 @@ def update_log(log):
     db.session.commit()
 
 
-def get_logs_by_user(user_id):
+def get_logs_by_user(user_id, start_date, end_date):
     """query for logs by user_id."""
-    logs = db.session.query(Log).filter(
-        Log.user_id == user_id).order_by(Log.date).all()
+    if start_date == None or end_date == None:
+        logs = db.session.query(Log).filter(
+            Log.user_id == user_id).order_by(Log.date).all()
+        return logs
+    else:
+        start_date = parse(start_date)
+        end_date = parse(end_date)
+        logs = db.session.query(Log).filter(
+            Log.user_id == user_id,
+            Log.date.between(start_date, end_date)
+        ).order_by(Log.date).all()
 
-    return logs
+        return logs
 
 
 def get_log_by_id(log_id):

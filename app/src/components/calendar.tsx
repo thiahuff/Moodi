@@ -19,7 +19,10 @@ interface CalendarDay {
   log_id?: string
 }
 
-const createCalendar = (date: dayjs.Dayjs, logs: Log[]): CalendarDay[][] => {
+export const createCalendar = (
+  date: dayjs.Dayjs,
+  logs: Log[]
+): CalendarDay[][] => {
   const currentMonthDays: number = date.daysInMonth()
 
   const thisMonthsDatesArray: dayjs.Dayjs[] = Array.from(
@@ -36,8 +39,7 @@ const createCalendar = (date: dayjs.Dayjs, logs: Log[]): CalendarDay[][] => {
   ]
 
   const calendarArray: CalendarDay[] = combinedDates.map(date => {
-    const log = logs.find(l => dayjs(l.date).isSame(date.startOf("day"), "day"))
-    if (log) console.log(date, log.date)
+    const log = logs.find(l => date.startOf("day").isSame(l.date, "day"))
 
     if (!log) {
       return {
@@ -56,7 +58,7 @@ const createCalendar = (date: dayjs.Dayjs, logs: Log[]): CalendarDay[][] => {
   return createWeeks(calendarArray)
 }
 
-const moodValueToColor = mood_value => {
+export const moodValueToColor = (mood_value: number) => {
   if (mood_value == 1) return "dark-slate-blue"
   else if (mood_value <= 1.5) return "dark-moderate-blue"
   else if (mood_value <= 2) return "sapphire-blue"
@@ -78,7 +80,7 @@ const moodValueToColor = mood_value => {
   else if (mood_value <= 10) return "sandy-brown"
 }
 
-const getLeadingDays = (date: dayjs.Dayjs): dayjs.Dayjs[] => {
+export const getLeadingDays = (date: dayjs.Dayjs): dayjs.Dayjs[] => {
   const leadingDays = date.startOf("month").day() // 0 -sunday => 6 saturday
   const previousMonth = date.subtract(1, "month") // dayjs object from current time -1 month
   const daysInPreviousMonth: number = previousMonth.daysInMonth() // count of days in previous month
@@ -94,7 +96,7 @@ const getLeadingDays = (date: dayjs.Dayjs): dayjs.Dayjs[] => {
   return result
 }
 
-const getSucceedingDays = (date: dayjs.Dayjs): dayjs.Dayjs[] => {
+export const getSucceedingDays = (date: dayjs.Dayjs): dayjs.Dayjs[] => {
   const endDate = date.endOf("month").day() // 0 -sunday => 6 saturday
   const nextMonth = dayjs(date).add(1, "month")
   const daysInNextMonth: number = nextMonth.daysInMonth()
@@ -108,7 +110,7 @@ const getSucceedingDays = (date: dayjs.Dayjs): dayjs.Dayjs[] => {
   return result
 }
 
-const createWeeks = allDays => {
+export const createWeeks = allDays => {
   let result = []
 
   for (let index = 0; index < allDays.length / 7; index++) {
@@ -123,6 +125,7 @@ const Calendar = ({ logs, refreshLogs }) => {
   const weeks = createCalendar(now, logs)
 
   const [modalOpen, setModalOpen] = useState(false)
+  const [selectedDate, setSelectedDate] = useState(null)
 
   const handleOpenModal = date => {
     setModalOpen(true)
