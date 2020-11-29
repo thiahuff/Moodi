@@ -1,6 +1,8 @@
 import Auth from "@aws-amplify/auth"
 import {
   Button,
+  Dialog,
+  DialogContent,
   FormControl,
   FormControlLabel,
   Icon,
@@ -80,13 +82,13 @@ const EditHabit = () => {
       >
         Add Habit
       </Button>
-      <Modal
+      <Dialog
         open={open}
         onClose={handleClose}
         aria-labelledby="create-habit"
         aria-describedby="form-to-create-habit"
       >
-        <Paper elevation={3}>
+        <DialogContent>
           <form onSubmit={handleSubmit(onSubmit)}>
             <FormControl>
               <InputLabel htmlFor="habit_name">Habit Name</InputLabel>
@@ -143,8 +145,8 @@ const EditHabit = () => {
               Submit
             </Button>
           </form>
-        </Paper>
-      </Modal>
+        </DialogContent>
+      </Dialog>
     </Layout>
   )
 }
