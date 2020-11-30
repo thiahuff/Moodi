@@ -1,5 +1,5 @@
 from model import db, Log
-from sqlalchemy import asc, extract
+from sqlalchemy import asc, extract, cast, Date
 from dateutil.parser import *
 
 
@@ -41,7 +41,8 @@ def get_logs_by_user(user_id, start_date, end_date):
         end_date = parse(end_date)
         logs = db.session.query(Log).filter(
             Log.user_id == user_id,
-            Log.date.between(start_date, end_date)
+            cast(Log.date, Date) >= start_date,
+            cast(Log.date, Date) <= end_date
         ).order_by(Log.date).all()
 
         return logs

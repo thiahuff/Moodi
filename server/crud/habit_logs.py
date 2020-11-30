@@ -22,10 +22,20 @@ def update_habit_log(habit_log):
 
 def get_habit_logs_by_user(user_id):
     """query for habit_logs by user_id."""
+    # if start_date == None or end_date == None:
     habit_logs = db.session.query(Habit_Log).filter(
         Habit_Log.user_id == user_id).all()
-
     return habit_logs
+    # else:
+    #     start_date = parse(start_date)
+    #     end_date = parse(end_date)
+    #     logs = db.session.query(Log).filter(
+    #         Habit_log.user_id == user_id,
+    #         Habit_log.date.between(start_date, end_date)).order_by(Log.date).all()
+    #     return habit_logs
+
+
+# TODO: Add logic to filter by start and end dates here and to the route to get habit logs by user
 
 
 def get_habit_log_by_id(habit_log_id):
