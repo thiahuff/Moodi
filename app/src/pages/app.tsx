@@ -17,11 +17,13 @@ import Axios from "axios"
 import { useForm, useFieldArray, Controller } from "react-hook-form"
 import { Habit, Log as LogType, HabitLog } from "../types"
 import LogFormContainer from "../components/log-form-container"
+import SEO from "../components/seo"
 
 const App = () => {
   const now = dayjs()
   return (
     <Layout>
+      <SEO title="Home" />
       <LogFormContainer date={now} />
     </Layout>
   )

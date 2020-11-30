@@ -26,6 +26,7 @@ import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline"
 import { Controller, useForm } from "react-hook-form"
 import HabitsForm from "../components/habits-form"
 import Loader from "../components/loader"
+import SEO from "../components/seo"
 
 const EditHabit = () => {
   const [isLoading, setIsLoading] = useState(true)
@@ -74,6 +75,7 @@ const EditHabit = () => {
 
   return (
     <Layout>
+      <SEO title="Edit Habits" />
       <HabitsForm habits={habits} refreshHabits={getUserHabits} />
       <Button
         variant="contained"

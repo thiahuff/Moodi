@@ -3,6 +3,7 @@ import Layout from "../components/layout"
 import Calendar from "../components/calendar"
 import Auth from "@aws-amplify/auth"
 import Axios from "axios"
+import SEO from "../components/seo"
 
 const CalendarView = () => {
   // State to hold logs
@@ -23,6 +24,7 @@ const CalendarView = () => {
 
   return (
     <Layout>
+      <SEO title="Calendar" />
       <Calendar logs={logData} refreshLogs={getUserData} />
     </Layout>
   )

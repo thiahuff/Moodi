@@ -8,6 +8,7 @@ import { Link, navigate } from "gatsby"
 import { Button, FormControl, Input, InputLabel } from "@material-ui/core"
 import dayjs from "dayjs"
 import utc from "dayjs/plugin/utc"
+import SEO from "../components/seo"
 
 Auth.configure(config)
 dayjs.extend(utc)
@@ -22,6 +23,7 @@ const IndexPage = () => {
 
   return (
     <Layout>
+      <SEO title="Login" />
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl>
           <InputLabel htmlFor="email">Email</InputLabel>
