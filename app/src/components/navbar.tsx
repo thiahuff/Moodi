@@ -19,7 +19,7 @@ import DateRangeIcon from "@material-ui/icons/DateRange"
 import Axios from "axios"
 import Auth from "@aws-amplify/auth"
 import HomeIcon from "@material-ui/icons/Home"
-import "./navbar.css"
+import "./navbar.scss"
 
 const Navbar = () => {
   const [drawerOpen, setOpen] = useState(false)
@@ -51,13 +51,7 @@ const Navbar = () => {
             <MenuIcon />
           </IconButton>
           <h1 style={{ margin: 0 }}>
-            <Link
-              to="/"
-              style={{
-                color: `white`,
-                textDecoration: `none`,
-              }}
-            >
+            <Link to="/" className="logo-link">
               moodi
             </Link>
           </h1>

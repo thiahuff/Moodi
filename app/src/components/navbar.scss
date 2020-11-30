@@ -1,0 +1,11 @@
+.logout {
+  margin-left: auto;
+}
+
+.logo-link {
+  // textDecoration: "none",
+  color: white;
+  &:hover {
+    color: rgba(242, 158, 76, 1) !important;
+  }
+}
