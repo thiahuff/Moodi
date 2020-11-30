@@ -2,9 +2,11 @@ import Auth from "@aws-amplify/auth"
 import {
   Button,
   Dialog,
+  DialogActions,
   DialogContent,
   FormControl,
   FormControlLabel,
+  Grid,
   Icon,
   Input,
   InputLabel,
@@ -89,65 +91,86 @@ const EditHabit = () => {
         onClose={handleClose}
         aria-labelledby="create-habit"
         aria-describedby="form-to-create-habit"
+        maxWidth="md"
+        fullWidth
       >
         <DialogContent>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <FormControl>
-              <InputLabel htmlFor="habit_name">Habit Name</InputLabel>
-              <Input id="habit_name" name="name" inputRef={register} />
-            </FormControl>
-            <FormControl>
-              <TextField
-                label="Description"
-                name="description"
-                multiline
-                rows={4}
-                variant="outlined"
-                inputRef={register}
-              />
-            </FormControl>
-            <FormControl>
-              <InputLabel id="habit-display-type">
-                How do you want to track this habit?
-              </InputLabel>
-              <Controller
-                as={
-                  <Select labelId="habit-display-type">
-                    <MenuItem value="y/n">Yes or No</MenuItem>
-                    <MenuItem value="slider">1-10 sliding scale</MenuItem>
-                  </Select>
-                }
-                control={control}
-                name="display_type"
-              />
-            </FormControl>
-            <FormControl>
-              <InputLabel id="habit-type">
-                What kind of habit is this?
-              </InputLabel>
-              <Controller
-                as={
-                  <Select labelId="habit-type">
-                    <MenuItem value="passive">
-                      Neutral - I'm just keeping track
-                    </MenuItem>
-                    <MenuItem value="active-positive">
-                      Positive - I'm trying to do this more!
-                    </MenuItem>
-                    <MenuItem value="active-negative">
-                      Negative - I'm trying to do this less
-                    </MenuItem>
-                  </Select>
-                }
-                control={control}
-                name="habit_type"
-              />
-            </FormControl>
-            <Button type="submit" variant="contained">
-              Submit
-            </Button>
+            <Grid container spacing={2} justify="center">
+              {/* Habit Name */}
+              <Grid item xs={12} md={8}>
+                <FormControl>
+                  <InputLabel htmlFor="habit_name">Habit Name</InputLabel>
+                  <Input id="habit_name" name="name" inputRef={register} />
+                </FormControl>
+              </Grid>
+
+              {/* Habit Description */}
+              <Grid item xs={12} md={8}>
+                <FormControl>
+                  <TextField
+                    label="Description"
+                    name="description"
+                    multiline
+                    rows={4}
+                    variant="outlined"
+                    inputRef={register}
+                  />
+                </FormControl>
+              </Grid>
+
+              {/* Display Type */}
+              <Grid item xs={12} md={8}>
+                <FormControl>
+                  <InputLabel id="habit-display-type">
+                    How do you want to track this habit?
+                  </InputLabel>
+                  <Controller
+                    as={
+                      <Select labelId="habit-display-type">
+                        <MenuItem value="y/n">Yes or No</MenuItem>
+                        <MenuItem value="slider">1-10 sliding scale</MenuItem>
+                      </Select>
+                    }
+                    control={control}
+                    name="display_type"
+                  />
+                </FormControl>
+              </Grid>
+
+              {/* Habit Type */}
+              <Grid item xs={12} md={8}>
+                <FormControl>
+                  <InputLabel id="habit-type">
+                    What kind of habit is this?
+                  </InputLabel>
+                  <Controller
+                    as={
+                      <Select labelId="habit-type">
+                        <MenuItem value="passive">
+                          Neutral - I'm just keeping track
+                        </MenuItem>
+                        <MenuItem value="active-positive">
+                          Positive - I'm trying to do this more!
+                        </MenuItem>
+                        <MenuItem value="active-negative">
+                          Negative - I'm trying to do this less
+                        </MenuItem>
+                      </Select>
+                    }
+                    control={control}
+                    name="habit_type"
+                  />
+                </FormControl>
+              </Grid>
+            </Grid>
           </form>
         </DialogContent>
+        <DialogActions>
+          <Button type="submit" variant="contained">
+            Submit
+          </Button>
+        </DialogActions>
       </Dialog>
     </Layout>
   )
