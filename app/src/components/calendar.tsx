@@ -5,6 +5,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Grid,
   TextField,
 } from "@material-ui/core"
 import dayjs from "dayjs"
@@ -152,16 +153,22 @@ const Calendar = ({ logs, refreshLogs }) => {
   return (
     <>
       <LocalizationProvider dateAdapter={DayJsUtils}>
-        <DatePicker
-          openTo="month"
-          views={["year", "month"]}
-          label="Year and Month"
-          value={monthValue}
-          onChange={newValue => setMonthValue(newValue)}
-          renderInput={props => (
-            <TextField {...props} helperText="Select Month" />
-          )}
-        />
+        <Grid container justify="flex-end">
+          <DatePicker
+            openTo="month"
+            views={["year", "month"]}
+            label="Year and Month"
+            value={monthValue}
+            onChange={newValue => setMonthValue(newValue)}
+            renderInput={props => (
+              <TextField
+                {...props}
+                helperText="Select Month"
+                style={{ marginRight: "1rem" }}
+              />
+            )}
+          />
+        </Grid>
       </LocalizationProvider>
       <div className="calendar">
         <div className="calendar-month-title">
