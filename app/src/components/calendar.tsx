@@ -11,8 +11,13 @@ import dayjs from "dayjs"
 import React, { useState } from "react"
 import { Log } from "../types"
 import LogFormContainer from "./log-form-container"
+import ArrowLeftIcon from "@material-ui/icons/ArrowLeft"
+import ArrowRightIcon from "@material-ui/icons/ArrowRight"
+import { DatePicker, LocalizationProvider } from "@material-ui/pickers"
+import DayJsUtils from "@material-ui/pickers/adapter/dayjs"
 
 import "./calendar.scss"
+
 interface CalendarDay {
   className: string
   date: dayjs.Dayjs
@@ -87,7 +92,7 @@ export const getLeadingDays = (date: dayjs.Dayjs): dayjs.Dayjs[] => {
 
   let result: dayjs.Dayjs[] = []
 
-  for (let index = 0; index < leadingDays; index++) {
+  for (let index = 1; index <= leadingDays; index++) {
     result.push(
       previousMonth.set("date", daysInPreviousMonth - leadingDays + index)
     )
@@ -121,8 +126,10 @@ export const createWeeks = allDays => {
 }
 
 const Calendar = ({ logs, refreshLogs }) => {
-  const now = dayjs()
-  const weeks = createCalendar(now, logs)
+  const [monthValue, setMonthValue] = useState<dayjs.Dayjs>(
+    dayjs().startOf("month")
+  )
+  const weeks = createCalendar(monthValue, logs)
 
   const [modalOpen, setModalOpen] = useState(false)
   const [selectedDate, setSelectedDate] = useState(null)
@@ -144,8 +151,30 @@ const Calendar = ({ logs, refreshLogs }) => {
 
   return (
     <>
+      <LocalizationProvider dateAdapter={DayJsUtils}>
+        <DatePicker
+          openTo="month"
+          views={["year", "month"]}
+          label="Year and Month"
+          value={monthValue}
+          onChange={newValue => setMonthValue(newValue)}
+          renderInput={props => (
+            <TextField {...props} helperText="Select Month" />
+          )}
+        />
+      </LocalizationProvider>
       <div className="calendar">
-        <div className="calendar-month-title">{now.format("MMMM YYYY")}</div>
+        <div className="calendar-month-title">
+          <ArrowLeftIcon
+            onClick={() => setMonthValue(monthValue.subtract(1, "month"))}
+            style={{ cursor: "pointer" }}
+          />
+          {monthValue.format("MMMM YYYY")}
+          <ArrowRightIcon
+            onClick={() => setMonthValue(monthValue.add(1, "month"))}
+            style={{ cursor: "pointer" }}
+          />
+        </div>
         <div className="calendar-days-of-week">
           <div>Sunday</div>
           <div>Monday</div>
