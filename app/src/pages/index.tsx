@@ -5,7 +5,7 @@ import Auth from "@aws-amplify/auth"
 import config from "../../config"
 import Axios from "axios"
 import { Link, navigate } from "gatsby"
-import { Button, FormControl, Input, InputLabel } from "@material-ui/core"
+import { Button, FormControl, Grid, Input, InputLabel } from "@material-ui/core"
 import dayjs from "dayjs"
 import utc from "dayjs/plugin/utc"
 import SEO from "../components/seo"
@@ -25,26 +25,43 @@ const IndexPage = () => {
     <Layout>
       <SEO title="Login" />
       <form onSubmit={handleSubmit(onSubmit)}>
-        <FormControl>
-          <InputLabel htmlFor="email">Email</InputLabel>
-          <Input id="email" name="username" inputRef={register} />
-        </FormControl>
-        <FormControl>
-          <InputLabel htmlFor="password">Password</InputLabel>
-          <Input
-            id="password"
-            type="password"
-            name="password"
-            inputRef={register}
-          />
-        </FormControl>
-        <Button type="submit" variant="contained">
-          Submit
-        </Button>
+        <Grid container spacing={2} justify="center">
+          {/* Email */}
+          <Grid item xs={12} md={4}>
+            <FormControl>
+              <InputLabel htmlFor="email">Email</InputLabel>
+              <Input id="email" name="username" inputRef={register} />
+            </FormControl>
+          </Grid>
+
+          {/* Password */}
+          <Grid item xs={12} md={4}>
+            <FormControl>
+              <InputLabel htmlFor="password">Password</InputLabel>
+              <Input
+                id="password"
+                type="password"
+                name="password"
+                inputRef={register}
+              />
+            </FormControl>
+          </Grid>
+
+          {/* Submit Button */}
+          <Grid item xs={12} md={4}>
+            <Button type="submit" variant="contained">
+              Submit
+            </Button>
+          </Grid>
+        </Grid>
       </form>
-      <Link to="/register">
-        <Button variant="contained">Register</Button>
-      </Link>
+      <Grid container spacing={2} justify="flex-end">
+        <Grid item xs={12} md={4}>
+          <Link to="/register">
+            <Button variant="contained">Register</Button>
+          </Link>
+        </Grid>
+      </Grid>
     </Layout>
   )
 }
