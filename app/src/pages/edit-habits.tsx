@@ -29,6 +29,7 @@ import { Controller, useForm } from "react-hook-form"
 import HabitsForm from "../components/habits-form"
 import Loader from "../components/loader"
 import SEO from "../components/seo"
+import "./edit-habits.scss"
 
 const EditHabit = () => {
   const [isLoading, setIsLoading] = useState(true)
@@ -83,6 +84,7 @@ const EditHabit = () => {
         variant="contained"
         endIcon={<AddCircleOutlineIcon />}
         onClick={handleOpen}
+        className="edit-button"
       >
         Add Habit
       </Button>
@@ -166,7 +168,7 @@ const EditHabit = () => {
             </Grid>
           </DialogContent>
           <DialogActions>
-            <Button type="submit" variant="contained">
+            <Button type="submit" variant="contained" className="edit-button">
               Submit
             </Button>
           </DialogActions>

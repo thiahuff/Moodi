@@ -19,6 +19,7 @@ import React, { Fragment, useState } from "react"
 import { Controller, useFieldArray, useForm } from "react-hook-form"
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever"
 import Axios from "axios"
+import "../pages/edit-habits.scss"
 
 const HabitsForm = ({ habits, refreshHabits }) => {
   const { handleSubmit, control, register } = useForm({
@@ -158,6 +159,7 @@ const HabitsForm = ({ habits, refreshHabits }) => {
                 color="primary"
                 endIcon={<DeleteForeverIcon />}
                 onClick={() => handleClickOpen(habit)}
+                className="delete-button"
               >
                 Delete Habit
               </Button>
