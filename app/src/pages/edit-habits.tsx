@@ -71,14 +71,14 @@ const EditHabit = () => {
     setOpen(false)
   }
 
-  if (isLoading) {
-    return <Loader />
-  }
-
   return (
     <Layout>
       <SEO title="Edit Habits" />
-      <HabitsForm habits={habits} refreshHabits={getUserHabits} />
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <HabitsForm habits={habits} refreshHabits={getUserHabits} />
+      )}
       <Button
         variant="contained"
         endIcon={<AddCircleOutlineIcon />}
@@ -94,8 +94,8 @@ const EditHabit = () => {
         maxWidth="md"
         fullWidth
       >
-        <DialogContent>
-          <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <DialogContent>
             <Grid container spacing={2} justify="center">
               {/* Habit Name */}
               <Grid item xs={12} md={8}>
@@ -164,13 +164,13 @@ const EditHabit = () => {
                 </FormControl>
               </Grid>
             </Grid>
-          </form>
-        </DialogContent>
-        <DialogActions>
-          <Button type="submit" variant="contained">
-            Submit
-          </Button>
-        </DialogActions>
+          </DialogContent>
+          <DialogActions>
+            <Button type="submit" variant="contained">
+              Submit
+            </Button>
+          </DialogActions>
+        </form>
       </Dialog>
     </Layout>
   )
