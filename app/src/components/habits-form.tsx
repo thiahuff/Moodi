@@ -193,7 +193,7 @@ const HabitsForm = ({ habits, refreshHabits }) => {
         )
       })}
       {/* onClick={updateHabit} TODO: Add back to button below */}
-      <Button variant="contained" type="submit">
+      <Button variant="contained" type="submit" className="edit-button">
         Submit Changes
       </Button>
     </form>
