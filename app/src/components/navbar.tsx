@@ -51,7 +51,7 @@ const Navbar = () => {
             <MenuIcon />
           </IconButton>
           <h1 style={{ margin: 0 }}>
-            <Link to="/" className="logo-link">
+            <Link to={loggedIn ? "/app" : "/"} className="logo-link">
               moodi
             </Link>
           </h1>

@@ -16,7 +16,6 @@ import dayjs from "dayjs"
 import React, { Fragment } from "react"
 import { useForm, useFieldArray, Controller } from "react-hook-form"
 import InfoIcon from "@material-ui/icons/Info"
-
 import "./log-form.scss"
 
 const LogForm = ({ defaultValues, onSubmit }) => {
