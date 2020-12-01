@@ -73,7 +73,7 @@ const Navbar = () => {
         onOpen={() => setOpen(true)}
       >
         <List>
-          <Link to="/app">
+          <Link to={loggedIn ? "/app" : "/"}>
             <ListItem>
               <ListItemIcon>
                 <HomeIcon />
