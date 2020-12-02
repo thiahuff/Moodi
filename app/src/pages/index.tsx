@@ -9,6 +9,7 @@ import { Button, FormControl, Grid, Input, InputLabel } from "@material-ui/core"
 import dayjs from "dayjs"
 import utc from "dayjs/plugin/utc"
 import SEO from "../components/seo"
+import "./index.scss"
 
 Auth.configure(config)
 dayjs.extend(utc)
@@ -24,17 +25,24 @@ const IndexPage = () => {
   return (
     <Layout>
       <SEO title="Login" />
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Grid container spacing={2} justify="center">
-          {/* Email */}
+      <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
+        {/* Title */}
+        <Grid container justify="center">
+          <h1>moodi</h1>
+        </Grid>
+
+        {/* Email */}
+        <Grid container justify="center">
           <Grid item xs={12} md={4}>
             <FormControl>
               <InputLabel htmlFor="email">Email</InputLabel>
               <Input id="email" name="username" inputRef={register} />
             </FormControl>
           </Grid>
+        </Grid>
 
-          {/* Password */}
+        {/* Password */}
+        <Grid container justify="center">
           <Grid item xs={12} md={4}>
             <FormControl>
               <InputLabel htmlFor="password">Password</InputLabel>
@@ -46,22 +54,26 @@ const IndexPage = () => {
               />
             </FormControl>
           </Grid>
+        </Grid>
 
-          {/* Submit Button */}
+        {/* Submit Button */}
+        <Grid container justify="center">
           <Grid item xs={12} md={4}>
-            <Button type="submit" variant="contained">
+            <Button color="primary" type="submit" variant="contained">
               Submit
             </Button>
           </Grid>
         </Grid>
-      </form>
-      <Grid container spacing={2} justify="flex-end">
-        <Grid item xs={12} md={4}>
-          <Link to="/register">
-            <Button variant="contained">Register</Button>
-          </Link>
+
+        {/* Register */}
+        <Grid container justify="center">
+          <Grid item xs={12} md={4}>
+            <Button variant="contained" onClick={() => navigate("/register")}>
+              Register
+            </Button>
+          </Grid>
         </Grid>
-      </Grid>
+      </form>
     </Layout>
   )
 }
