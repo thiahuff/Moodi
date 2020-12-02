@@ -13,6 +13,8 @@ import {
   LocalizationProvider,
 } from "@material-ui/pickers"
 import { TextField } from "@material-ui/core"
+import "./graph-view.scss"
+import { RangeInput } from "@material-ui/pickers/DateRangePicker/RangeTypes"
 
 const colors = [
   "rgba(84, 71, 140, 1)",
@@ -29,10 +31,9 @@ const colors = [
 
 const GraphView = () => {
   const [data, setData] = useState(null)
-  const [selectedDate, setSelectedDate] = React.useState([
-    dayjs().subtract(60, "day"),
-    dayjs(),
-  ])
+  const [selectedDate, setSelectedDate] = React.useState<
+    [dayjs.Dayjs, dayjs.Dayjs]
+  >([dayjs().subtract(30, "day"), dayjs()])
 
   const getUserData = async () => {
     const user = await Auth.currentAuthenticatedUser()
@@ -136,6 +137,7 @@ const GraphView = () => {
       <h1>Graph View</h1>
       <LocalizationProvider dateAdapter={DayJsUtils}>
         <DateRangePicker
+          className="date-filter"
           startText="Start Date"
           endText="End Date"
           value={selectedDate}
