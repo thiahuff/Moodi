@@ -10,8 +10,8 @@ Users are able to create custom habits tracked as a one-to-ten scale or as a yes
 
 ### Dependencies
 
-- Describe any prerequisites, libraries, OS version, etc., needed before installing program.
-- ex. Windows 10
+- [Vagrant](https://www.vagrantup.com/downloads.html) to run the server
+- Node version 14 or higher
 
 ### Installing
 
