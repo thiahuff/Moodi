@@ -20,21 +20,12 @@ Users are able to create custom habits tracked as a one-to-ten scale or as a yes
 
 ### Executing program
 
-- How to run the program
-- Step-by-step bullets
+- You will need to run main.py with python3 for the Flask server and gatsby develop for React
 
-```
-code blocks for commands
-```
-
-## Help
-
-Any advise for common problems or issues.
-
-```
-command to run if program contains helper info
-```
-
-## Authors
+## Author
 
 Cynthia Soffiantini [thiahuff](https://github.com/thiahuff)
+
+```
+
+```
