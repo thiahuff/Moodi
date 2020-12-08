@@ -15,12 +15,25 @@ Users are able to create custom habits tracked as a one-to-ten scale or as a yes
 
 ### Installing
 
-- How/where to download your program
-- Any modifications needed to be made to files/folders
+- Clone down project
+
+#### Server
+
+- cd into `server` folder
+- run `vagrant up`
+- run `vagrant ssh`
+- run `source bin/activate`
+- `pip3 install requirements.txt`
+
+#### App
+
+- cd into `app` folder
+- `npm install`
 
 ### Executing program
 
-- You will need to run main.py with python3 for the Flask server and gatsby develop for React
+- In the server folder `python3 main.py` to run the Flask server
+- In the app folder `gatsby develop` for React
 
 ## Author
 
