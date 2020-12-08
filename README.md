@@ -22,7 +22,7 @@ Users are able to create custom habits tracked as a one-to-ten scale or as a yes
 - cd into `server` folder
 - run `vagrant up`
 - run `vagrant ssh`
-- run `source bin/activate`
+- run `source env/bin/activate`
 - `pip3 install requirements.txt`
 
 #### App
