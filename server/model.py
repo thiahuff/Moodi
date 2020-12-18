@@ -74,7 +74,6 @@ class Log(db.Model):
     log_id = db.Column(UUID(as_uuid=True), primary_key=True,
                        default=uuid.uuid4, unique=True, nullable=False)
     user_id = db.Column(db.ForeignKey('users.user_id', ondelete="cascade"))
-    # TODO: Change this to Date?
     date = db.Column(db.DateTime, nullable=False)
     mood_value = db.Column(db.Float)
 
